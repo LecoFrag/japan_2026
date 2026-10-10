@@ -1,0 +1,6 @@
+# documentos originais (ficam só no computador)
+*.docx
+~$*
+# configuração local
+.claude/
+node_modules/
