@@ -136,6 +136,23 @@
     });
   };
 
+  /* -------------------------------------------------- trechos de cada item da linha do tempo
+     Cada item com "to" cobre os trechos da rota desde o ponto onde o item anterior terminou
+     até a primeira ocorrência de "to". Itens sem "to" não têm deslocamento. */
+  M.segments = (day) => {
+    const r = day.route || []; let cursor = 0;
+    return (day.schedule || []).map((s) => {
+      if (s.off) return { legs: [], at: s.p || null, off: true };
+      if (!s.to) return { legs: [], at: s.p || (r[cursor] && r[cursor].p) || null };
+      let j = -1;
+      for (let k = cursor + 1; k < r.length; k++) if (r[k].p === s.to) { j = k; break; }
+      if (j < 0) return { legs: [], at: s.to };
+      const legs = []; for (let k = cursor + 1; k <= j; k++) legs.push(k);
+      cursor = j;
+      return { legs, at: s.to };
+    });
+  };
+
   /* -------------------------------------------------- mapa do dia */
   M.dayMap = (el, day) => {
     const map = makeMap(el, { embedded: true });
@@ -150,22 +167,25 @@
       zoneLayers.push(poly);
     });
 
+    const legLayers = {}; // índice da rota -> [{ layer, base }]
+    const keep = (i, layer) => { (legLayers[i] = legLayers[i] || []).push({ layer, base: { ...layer.options } }); return layer; };
     legs.forEach((lg) => {
       if (lg.mode === 'walk') {
-        L.polyline(lg.path, { color: '#fff', weight: 8, opacity: 0.9, interactive: false }).addTo(map);
-        L.polyline(lg.path, { color, weight: 4.5, opacity: 0.95 }).addTo(map)
+        keep(lg.i, L.polyline(lg.path, { color: '#fff', weight: 8, opacity: 0.9, interactive: false }).addTo(map));
+        keep(lg.i, L.polyline(lg.path, { color, weight: 4.5, opacity: 0.95 }).addTo(map))
           .bindTooltip(`🚶 ${U.fmtDist(lg.dist)} · ~${U.fmtMin(lg.min)} a pé`, { sticky: true });
-        L.polyline(lg.path, { color: '#fff', weight: 2, opacity: 0.9, className: 'walk-ants', interactive: false }).addTo(map);
+        keep(lg.i, L.polyline(lg.path, { color: '#fff', weight: 2, opacity: 0.9, className: 'walk-ants', interactive: false }).addTo(map));
       } else {
         const dark = lg.mode === 'taxi' || lg.mode === 'bus' ? '#5b4636' : '#3b3833';
-        L.polyline(lg.path, { color: '#fff', weight: 7, opacity: 0.85, interactive: false }).addTo(map);
-        const line = L.polyline(lg.path, { color: dark, weight: 3.5, dashArray: lg.mode === 'shinkansen' ? '14 8' : '3 9', lineCap: 'round', opacity: 0.9 }).addTo(map);
+        keep(lg.i, L.polyline(lg.path, { color: '#fff', weight: 7, opacity: 0.85, interactive: false }).addTo(map));
+        const line = keep(lg.i, L.polyline(lg.path, { color: dark, weight: 3.5, dashArray: lg.mode === 'shinkansen' ? '14 8' : '3 9', lineCap: 'round', opacity: 0.9 }).addTo(map));
         const ic = { train: '🚆', subway: '🚇', shinkansen: '🚄', bus: '🚌', taxi: '🚕', plane: '✈️' }[lg.mode] || '🚆';
         line.bindTooltip(`${ic} ${U.esc(lg.line || '')}${lg.min ? ' · ~' + U.fmtMin(lg.min) : ''}`, { sticky: true });
         if (lg.dist > 3000 && (lg.min || 0) >= 10) {
           const mid = lg.path[Math.floor(lg.path.length / 2)] || lg.path[0];
           const midPt = lg.path.length === 2 ? [(lg.path[0][0] + lg.path[1][0]) / 2, (lg.path[0][1] + lg.path[1][1]) / 2] : mid;
-          L.marker(midPt, { icon: L.divIcon({ className: '', html: `<div class="train-mk">${ic}${lg.min ? ' ' + U.fmtMin(lg.min) : ''}</div>`, iconSize: null, iconAnchor: [28, 10] }), interactive: false, keyboard: false }).addTo(map);
+          const tm = L.marker(midPt, { icon: L.divIcon({ className: '', html: `<div class="train-mk">${ic}${lg.min ? ' ' + U.fmtMin(lg.min) : ''}</div>`, iconSize: null, iconAnchor: [28, 10] }), interactive: false, keyboard: false }).addTo(map);
+          (legLayers[lg.i] = legLayers[lg.i] || []).push({ marker: tm });
         }
       }
     });
@@ -220,7 +240,7 @@
         L.DomEvent.disableClickPropagation(box);
         box.addEventListener('click', (e) => {
           const a = e.target.closest('[data-a]'); if (!a) return; e.preventDefault();
-          if (a.dataset.a === 'fit') fitDefault(true);
+          if (a.dataset.a === 'fit') { if (window.App && window.App.clearStep) window.App.clearStep(); else fitDefault(true); }
           if (a.dataset.a === 'me') M.locate(map);
           if (a.dataset.a === 'full') M.toggleFull(map);
         });
@@ -229,8 +249,50 @@
     });
     map.addControl(new Ctl());
 
+    /* destaque de um trecho: apaga o resto do dia e enquadra só o trecho escolhido */
+    let hl = null;
+    const routeIds = (day.route || []).map((r) => r.p);
+    function highlight(legIdxs = [], placeIds = []) {
+      hl = { legIdxs, placeIds };
+      const on = new Set(legIdxs);
+      const focusPlaces = new Set(placeIds.filter(Boolean));
+      legIdxs.forEach((i) => { focusPlaces.add(routeIds[i]); focusPlaces.add(routeIds[i - 1]); });
+      for (const [i, arr] of Object.entries(legLayers)) {
+        const lit = on.has(+i);
+        arr.forEach((o) => {
+          if (o.marker) { o.marker.setOpacity(lit ? 1 : 0.15); return; }
+          const b = o.base;
+          if (lit) o.layer.setStyle({ opacity: b.opacity, weight: b.weight + (b.color === '#fff' ? 4 : 2.5) });
+          else o.layer.setStyle({ opacity: b.opacity * 0.14, weight: b.weight });
+          if (lit) o.layer.bringToFront();
+        });
+      }
+      for (const [id, mk] of Object.entries(markers)) {
+        const lit = focusPlaces.has(id);
+        mk.setOpacity(lit ? 1 : 0.28);
+        mk.setZIndexOffset(lit ? 800 : 0);
+      }
+      zoneLayers.forEach((z) => z.setStyle({ opacity: 0.35, fillOpacity: 0.035 }));
+      // enquadrar
+      let b = null;
+      legIdxs.forEach((i) => (legs.find((l) => l.i === i) || { path: [] }).path.forEach((pt) => { b = b ? b.extend(pt) : L.latLngBounds(pt, pt); }));
+      focusPlaces.forEach((id) => { const p = U.place(id); if (p) b = b ? b.extend(p.ll) : L.latLngBounds(p.ll, p.ll); });
+      if (b && b.isValid()) map.flyToBounds(b, { padding: [40, 40], maxZoom: legIdxs.length ? 17 : 16, duration: 0.7 });
+      if (!legIdxs.length && placeIds[0] && markers[placeIds[0]]) {
+        const pin = markers[placeIds[0]].getElement() && markers[placeIds[0]].getElement().querySelector('.pin, .sta');
+        if (pin) { pin.classList.remove('pin-pulse'); void pin.offsetWidth; pin.classList.add('pin-pulse'); }
+      }
+    }
+    function clearHighlight(refit = true) {
+      hl = null;
+      for (const arr of Object.values(legLayers)) arr.forEach((o) => { if (o.marker) o.marker.setOpacity(1); else o.layer.setStyle({ opacity: o.base.opacity, weight: o.base.weight }); });
+      for (const mk of Object.values(markers)) { mk.setOpacity(1); mk.setZIndexOffset(0); }
+      zoneLayers.forEach((z) => z.setStyle({ opacity: 1, fillOpacity: 0.09 }));
+      if (refit) fitDefault(true);
+    }
+
     return {
-      map, zones, zoneLayers, legs, markers, fitDefault,
+      map, zones, zoneLayers, legs, markers, fitDefault, highlight, clearHighlight, isHighlighted: () => !!hl,
       focus(id, open = true) {
         const mk = markers[id]; const p = U.place(id); if (!p) return;
         map.flyTo(p.ll, Math.max(map.getZoom(), 16), { duration: 0.8 });

@@ -291,6 +291,34 @@ window.PLACES = {
     aka: ['Shibuya PARCO', 'PARCO', 'Nintendo TOKYO', 'Pokémon Center Shibuya', 'Capcom Store'],
   },
 
+  /* ---- Ikebukuro (jantar do dia 2) ---- */
+  'ikebukuro': {
+    n: 'Ikebukuro', jp: '池袋', t: 'bairro', c: 'tokyo', ll: [35.72950, 139.71400], w: 'Ikebukuro',
+    d: 'Grande centro comercial ao norte de Shinjuku, com uma das estações mais movimentadas de Tóquio. É o polo de anime e mangá alternativo a Akihabara: Animate (a maior loja de anime do mundo), Otome Road (voltada ao público feminino), Pokémon Center Mega Tokyo e o complexo Sunshine City. Fica a só 3 paradas do hotel pela linha Fukutoshin.',
+  },
+  'ikebukuro-sta': {
+    n: 'Estação Ikebukuro', jp: '池袋駅', t: 'estacao', c: 'tokyo', ll: [35.72950, 139.71090], w: 'Ikebukuro Station',
+    d: 'Estação gigante (JR Yamanote, metrô Fukutoshin/Marunouchi/Yurakucho, Seibu, Tobu). Use a saída leste (East Exit, 東口) para o Rikimaru, a Animate e o Sunshine City. Para voltar ao hotel: linha Fukutoshin até Higashi-Shinjuku (3 paradas, ~7 min).',
+  },
+  'rikimaru': {
+    n: 'Yakiniku Rikimaru Ikebukuro', jp: '焼肉力丸 池袋東口店', t: 'noite', c: 'tokyo', ll: [35.72880, 139.71260], img: false,
+    d: 'Rede de yakiniku (churrasco japonês na grelha da mesa) nascida em Osaka, famosa pelo rodízio de carne wagyu — língua grossa "Rikimaru", kalbi e harami de wagyu. A filial de Ikebukuro (saída leste, 5º andar do prédio FLC) foi a estreia da rede em Tóquio, em julho de 2025.',
+    tip: 'Endereço: 1-22-2 Minami-Ikebukuro, FLC Bldg. 5F (〒171-0022 東京都豊島区南池袋1-22-2 FLCビル5F) — ~1 min da saída leste da estação JR Ikebukuro. Tel.: 03-6685-9044. Seg–sex só jantar (16h–23h30, último pedido 23h); sáb/dom/feriados também almoço (11h30). Reserve online (Gurunavi / Savor Japan). Rodízios costumam ter limite de tempo (geralmente 90–120 min) e o pedido é feito por tablet. Posição no mapa aproximada.',
+    aka: ['Rikimaru', 'Yakiniku Rikimaru'], g: '焼肉力丸 池袋東口店',
+  },
+  'animate-ikebukuro': {
+    n: 'Animate Ikebukuro (loja principal)', jp: 'アニメイト池袋本店', t: 'games', c: 'tokyo', ll: [35.73115, 139.71545],
+    cs: 'Animate Ikebukuro',
+    d: 'A maior loja de anime do mundo: um prédio inteiro de mangás, produtos oficiais de anime, figures, artbooks e eventos, na "Animate-dori" de Ikebukuro, a ~7 min a pé da saída leste.',
+    tip: 'Opcional antes do jantar no Rikimaru (dia 07/12). Aberta até ~21h.', aka: ['Animate'],
+  },
+  'pokemon-center-mega': {
+    n: 'Pokémon Center Mega Tokyo', jp: 'ポケモンセンターメガトウキョー', t: 'games', c: 'tokyo', ll: [35.72889, 139.71918],
+    cs: 'Pokemon Center Mega Tokyo',
+    d: 'Uma das maiores Pokémon Centers do Japão, no shopping Sunshine City (Alpa, 2º andar), com estátuas gigantes de Mega Charizard e Mega Mewtwo, produtos exclusivos e área de cards. ~12 min a pé da estação.',
+    tip: 'Opcional antes do jantar no Rikimaru. O Sunshine City costuma fechar às 20h.', aka: ['Pokémon Center Mega Tokyo', 'Sunshine City'],
+  },
+
   /* ---- Dia 4: Palácio / Tokyo Station / Marunouchi / Ginza ---- */
   'otemachi-sta': {
     n: 'Estação Otemachi', jp: '大手町駅', t: 'estacao', c: 'tokyo', ll: [35.68470, 139.76630], w: 'Ōtemachi Station',
@@ -360,6 +388,21 @@ window.PLACES = {
     d: 'Maior shopping de luxo de Ginza (2017), com obras de arte gigantes no átrio, livraria Tsutaya com livros de arte e um terraço-jardim gratuito no topo com vista do bairro.',
     aka: ['Ginza Six'],
   },
+  'ginza-itchome-sta': {
+    n: 'Estação Ginza-itchome', jp: '銀座一丁目駅', t: 'estacao', c: 'tokyo', ll: [35.67400, 139.76730], w: 'Ginza-itchōme Station',
+    d: 'Estação da linha Yurakucho (dourada) no norte de Ginza. Vai direto até Toyosu em ~7 min — é a ponte entre Ginza e o teamLab Planets.',
+  },
+  'toyosu-sta': {
+    n: 'Estação Toyosu', jp: '豊洲駅', t: 'estacao', c: 'tokyo', ll: [35.65490, 139.79610], w: 'Toyosu Station',
+    d: 'Estação das linhas Yurakucho (metrô) e Yurikamome. Do metrô até o teamLab Planets são ~10 min a pé — ou 2 paradas de Yurikamome até Shin-Toyosu. A linha Yurakucho também vai direto até Ikebukuro.',
+  },
+  'teamlab-planets': {
+    n: 'teamLab Planets TOKYO', jp: 'チームラボプラネッツ TOKYO DMM', t: 'museu', c: 'tokyo', ll: [35.64938, 139.78973],
+    cs: 'teamLab Planets Tokyo',
+    d: 'Museu de arte digital imersiva do coletivo teamLab, em Toyosu, na baía de Tóquio. Percorre-se descalço: salas com água até os joelhos onde peixes de luz nadam ao seu redor, uma sala de espelhos com 60 mil lâmpadas (Infinite Crystal Universe), um universo de flores flutuantes e um jardim de orquídeas suspensas. Um dos lugares mais fotografados do Japão.',
+    tip: 'Ingresso com data e horário marcados, só online (site oficial teamlabplanets.dmm.com); preço dinâmico, adulto ~¥3.600–4.800 (dias úteis mais baratos). Visita de ~1h30–2h. Use bermuda ou calça que dobre acima do joelho; evite saia (há pisos espelhados). Armários gratuitos na entrada e toalhas disponíveis. Estação Shin-Toyosu (Yurikamome) a 1 min; Toyosu (metrô Yurakucho) a ~10 min a pé.',
+    aka: ['teamLab Planets', 'teamLab', 'TeamLab Planets', 'teamLab Planets Tokyo'], g: 'teamLab Planets TOKYO',
+  },
   'ginza-sta': {
     n: 'Estação Ginza', jp: '銀座駅', t: 'estacao', c: 'tokyo', ll: [35.67170, 139.76390], w: 'Ginza Station',
     d: 'Estação de metrô no centro de Ginza. Para voltar ao hotel: linha Marunouchi direto até Shinjuku-sanchome (~17 min).',
@@ -373,7 +416,8 @@ window.PLACES = {
   /* ---- Aeroportos de Tóquio ---- */
   'narita': {
     n: 'Aeroporto de Narita (NRT)', jp: '成田国際空港', t: 'aeroporto', c: 'tokyo', ll: [35.77200, 140.39290], w: 'Narita International Airport',
-    d: 'Principal aeroporto internacional de Tóquio, a ~60 km do centro. Até Shinjuku: trem Narita Express (N\'EX, ~80–90 min, direto) ou ônibus Limousine (~1h30–2h, deixa em hotéis/Busta Shinjuku).',
+    d: "NOSSO AEROPORTO DE CHEGADA. Principal aeroporto internacional de Tóquio, na província de Chiba, a ~70 km de Shinjuku — bem mais longe que Haneda. Até Shinjuku: trem Narita Express (N'EX, ~80–90 min, direto, ~¥3.330), Skyliner + JR com baldeação em Nippori (~75 min) ou ônibus Limousine (~1h30–2h).",
+    tip: "Pouso em 05/12 às 17h20. O N'EX não aceita Suica: compre o bilhete com assento reservado no balcão JR ou nas máquinas da estação, no subsolo do terminal.",
     aka: ['Narita', 'NRT'],
   },
   'haneda': {

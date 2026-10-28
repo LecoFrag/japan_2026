@@ -303,19 +303,43 @@
         ${sun ? `<div class="sun-row"><span>🌅 Nascer ${sun.rise}</span><span>🌇 Pôr do sol ${sun.set}</span>${clim ? `<span>🌡️ típico ${clim.min}–${clim.max} °C</span>` : ''}<span class="wx" id="wx"></span></div>` : ''}
       </header>`;
 
+    // trechos do mapa cobertos por cada item da linha do tempo
+    const segs = (day.route || []).length ? M.segments(day) : (day.schedule || []).map(() => ({ legs: [] }));
+    const legByIdx = Object.fromEntries(legs.map((l) => [l.i, l]));
+    const moveSummary = (seg) => {
+      if (seg.off) return '<div class="tl-move off">↪ Desvio opcional, fora da rota do dia</div>';
+      const ls = seg.legs.map((i) => legByIdx[i]).filter(Boolean);
+      if (!ls.length) return '<div class="tl-move none">📍 Sem deslocamento — acontece no mesmo lugar</div>';
+      const walkD = ls.filter((l) => l.mode === 'walk').reduce((a, l) => a + l.dist, 0);
+      const walkM = ls.filter((l) => l.mode === 'walk').reduce((a, l) => a + l.min, 0);
+      const parts = [];
+      ls.forEach((l) => {
+        if (l.mode === 'walk') { if (!parts.includes('walk')) parts.push('walk'); }
+        else parts.push(l);
+      });
+      return `<div class="tl-move">${parts.map((x) => x === 'walk'
+        ? `<span class="mv walk">🚶 ${U.fmtDist(walkD)} · ~${U.fmtMin(walkM)}</span>`
+        : `<span class="mv">${MODE_ICON[x.mode] || '🚆'} ${esc(x.line || MODE_NAME[x.mode])}${x.min ? ' · ~' + U.fmtMin(x.min) : ''}</span>`).join('<i>→</i>')}
+        <span class="mv-hint">ver no mapa ›</span></div>`;
+    };
     const timeline = `
       <section class="block">
-        <div class="block-title"><h2>🕘 Linha do tempo <span class="jp">予定</span></h2></div>
+        <div class="block-title"><h2>🕘 Linha do tempo <span class="jp">予定</span></h2>
+          ${(day.route || []).length ? '<button class="btn sm" id="tlAll" hidden>Ver o dia inteiro no mapa</button>' : ''}</div>
+        ${(day.route || []).length ? '<p class="muted tl-tip">Toque num item para destacar no mapa só aquele trecho.</p>' : ''}
         <ol class="timeline" style="${U.cssCity(c)}">
-          ${(day.schedule || []).map((s) => {
+          ${(day.schedule || []).map((s, idx) => {
             const p = s.p && PLACES[s.p];
-            return `<li class="tl-item ${s.k || ''} reveal">
+            const seg = segs[idx] || { legs: [] };
+            const can = (day.route || []).length > 0;
+            return `<li class="tl-item ${s.k || ''} ${seg.legs.length ? 'moves' : 'still'} reveal">
               <div class="tl-icon">${KIND_ICON[s.k] || '•'}</div>
-              <div class="tl-card ${p ? 'clickable' : ''}" ${p ? `data-focus="${s.p}"` : ''}>
+              <div class="tl-card ${can ? 'clickable' : ''}" ${can ? `data-step="${idx}" tabindex="0" role="button" aria-pressed="false"` : ''}>
                 <div class="tl-time">${esc(s.h)}</div>
                 <h3>${esc(s.t)}</h3>
                 ${s.d ? `<p>${U.linkify(s.d, { skip: p ? ['p:' + s.p] : [] })}</p>` : ''}
                 ${p ? `<span class="tl-place" data-open="p:${s.p}">${U.photo(s.p) ? `<img src="${esc(U.photo(s.p).url)}" alt="" loading="lazy">` : `<span class="ph">${U.typeOf(p).icon}</span>`}${esc(p.n)} ›</span>` : ''}
+                ${can ? moveSummary(seg) : ''}
               </div></li>`;
           }).join('')}
         </ol>
@@ -337,7 +361,7 @@
               const detail = l.mode === 'walk'
                 ? `${U.fmtDist(l.dist)} · ~${U.fmtMin(l.min)} a pé`
                 : `${MODE_NAME[l.mode]}${l.line ? ' — ' + esc(l.line) : ''}${l.min ? ' · ~' + U.fmtMin(l.min) : ''}${l.dist ? ' · ' + U.fmtDist(l.dist) : ''}`;
-              return `<li class="leg ${l.mode}"><span class="m">${MODE_ICON[l.mode] || '•'}</span>
+              return `<li class="leg ${l.mode}" data-leg="${l.i}" tabindex="0" role="button" title="Destacar este trecho no mapa"><span class="m">${MODE_ICON[l.mode] || '•'}</span>
                 <div class="ft">${esc(a.n)} → ${esc(b.n)}<small>${detail}</small></div>
                 <a class="gm" href="${U.gmDir(l.from, l.to, l.mode)}" target="_blank" rel="noopener" title="Abrir este trecho no Google Maps">Maps ↗</a></li>`;
             }).join('')}
@@ -386,6 +410,7 @@
       <aside class="day-side" id="daySide" style="${U.cssCity(c)}">
         <div class="map-tools">
           ${zones.map((z, i) => z.name ? `<button class="zone-chip" data-zone="${i}"><i></i>${esc(z.name)}</button>` : '').join('')}
+          <button class="zone-chip all-chip" id="mapAll" hidden>↺ Dia inteiro</button>
           <button class="zone-chip map-toggle" id="mapToggle">▾ Ocultar mapa</button>
         </div>
         <div class="day-map" id="dayMap"></div>
@@ -405,12 +430,46 @@
       const dm = M.dayMap($('#dayMap'), day);
       App.dayMap = dm;
       cleanup.push(() => { dm.map.remove(); App.dayMap = null; document.body.style.overflow = ''; });
-      $$('[data-zone]').forEach((b) => b.addEventListener('click', () => dm.fitZone(+b.dataset.zone)));
-      $$('[data-focus]').forEach((el) => el.addEventListener('click', (e) => {
-        if (e.target.closest('.gl, [data-open]')) return;
-        dm.focus(el.dataset.focus);
-        if (innerWidth <= 1100) { const side = $('#daySide'); side.classList.remove('collapsed'); $('#mapToggle').textContent = '▾ Ocultar mapa'; side.scrollIntoView({ behavior: 'smooth', block: 'start' }); setTimeout(() => dm.map.invalidateSize(), 400); }
-      }));
+      $$('[data-zone]').forEach((b) => b.addEventListener('click', () => { if (dm.isHighlighted()) { $$('.tl-card.sel, .leg.sel').forEach((x) => x.classList.remove('sel')); dm.clearHighlight(false); const a = $('#tlAll'); if (a) a.hidden = true; const m = $('#mapAll'); if (m) m.hidden = true; } dm.fitZone(+b.dataset.zone); }));
+      // clicar num item da linha do tempo (ou num trecho) destaca só aquele pedaço do mapa
+      const showMap = () => {
+        const side = $('#daySide');
+        if (side.classList.contains('collapsed')) {
+          side.classList.remove('collapsed'); $('#mapToggle').textContent = '▾ Ocultar mapa';
+          setTimeout(() => dm.map.invalidateSize(), 380);
+        }
+        const r = $('#dayMap').getBoundingClientRect();
+        if (r.bottom < 80 || r.top > innerHeight - 80) side.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      };
+      const markSel = (el) => {
+        $$('.tl-card.sel, .leg.sel').forEach((x) => { x.classList.remove('sel'); x.setAttribute('aria-pressed', 'false'); });
+        if (el) { el.classList.add('sel'); el.setAttribute('aria-pressed', 'true'); }
+        const all = $('#tlAll'); if (all) all.hidden = !el;
+        const ch = $('#mapAll'); if (ch) ch.hidden = !el;
+      };
+      App.clearStep = () => { markSel(null); dm.clearHighlight(true); };
+      const selectStep = (el) => {
+        if (el.classList.contains('sel')) { App.clearStep(); return; }
+        const seg = segs[+el.dataset.step];
+        const s = day.schedule[+el.dataset.step];
+        markSel(el);
+        dm.highlight(seg.legs, [s.p, seg.at]);
+        showMap();
+      };
+      $$('[data-step]').forEach((el) => {
+        el.addEventListener('click', (e) => { if (e.target.closest('.gl, [data-open], a')) return; selectStep(el); });
+        el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectStep(el); } });
+      });
+      $$('[data-leg]').forEach((el) => {
+        const go = () => {
+          if (el.classList.contains('sel')) { App.clearStep(); return; }
+          markSel(el); dm.highlight([+el.dataset.leg], []); showMap();
+        };
+        el.addEventListener('click', (e) => { if (e.target.closest('a')) return; go(); });
+        el.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); go(); } });
+      });
+      [$('#tlAll'), $('#mapAll')].forEach((b) => b && b.addEventListener('click', () => App.clearStep()));
+      cleanup.push(() => { App.clearStep = null; });
       const tg = $('#mapToggle');
       if (tg) {
         if (U.store.get('mapCollapsed', false) && innerWidth <= 1100) { $('#daySide').classList.add('collapsed'); tg.textContent = '▸ Mostrar mapa'; }

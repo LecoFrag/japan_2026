@@ -57,7 +57,7 @@ const stripHtml = (s = '') => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').tri
 async function commonsMeta(fileTitle) {
   const u = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=960&titles=' + encodeURIComponent(fileTitle);
   const j = await getJSON(u);
-  const page = j && Object.values(j.query.pages)[0];
+  const page = j && j.query && Object.values(j.query.pages)[0];
   const ii = page && page.imageinfo && page.imageinfo[0];
   if (!ii) return null;
   const m = ii.extmetadata || {};
@@ -100,7 +100,7 @@ async function photos() {
     if (!file && p.w) {
       const u = 'https://en.wikipedia.org/w/api.php?action=query&format=json&redirects=1&prop=pageimages|coordinates&piprop=name&titles=' + encodeURIComponent(p.w);
       const j = await getJSON(u);
-      const pg = j && Object.values(j.query.pages)[0];
+      const pg = j && j.query && Object.values(j.query.pages)[0];
       if (pg && pg.pageimage) file = 'File:' + pg.pageimage;
       if (pg && pg.coordinates) GEN.photos[id + '#coord'] = [pg.coordinates[0].lat, pg.coordinates[0].lon];
       if (!j) console.log(`  ! falha de rede (Wikipedia): ${id}`);
@@ -110,7 +110,7 @@ async function photos() {
     if (!file && query) {
       const u = 'https://commons.wikimedia.org/w/api.php?action=query&format=json&list=search&srnamespace=6&srlimit=5&srsearch=' + encodeURIComponent(query);
       const j = await getJSON(u);
-      const hit = j && j.query.search.find((s) => /\.(jpe?g|png|webp)$/i.test(s.title));
+      const hit = j && j.query && j.query.search.find((s) => /\.(jpe?g|png|webp)$/i.test(s.title));
       if (hit) file = hit.title;
       else console.log(`  ! nada no Commons: ${id} (${query})`);
     }

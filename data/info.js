@@ -3,7 +3,9 @@
    ========================================================================= */
 
 window.TODO = [
-  { id: 'aeroporto', t: 'Confirmar o aeroporto de chegada (Narita ou Haneda) e anotar números dos voos', day: 'tk0' },
+  { id: 'aeroporto', t: 'Anotar números dos voos e o terminal de chegada em Narita (T1 ou T2)', day: 'tk0' },
+  { id: 'teamlab', t: 'Comprar o ingresso do teamLab Planets — 09/12, horário de ~16h30 (site oficial)', day: 'tk4' },
+  { id: 'rikimaru', t: 'Reservar o Yakiniku Rikimaru Ikebukuro — 07/12, ~19h30, 2 pessoas', day: 'tk2' },
   { id: 'vjw', t: 'Preencher o Visit Japan Web (imigração + alfândega) antes do embarque' },
   { id: 'shibuya-sky', t: 'Reservar o Shibuya Sky — horário de ~15h45 em 08/12 (pôr do sol)', day: 'tk3' },
   { id: 'shinkansen', t: 'Comprar o Shinkansen Tóquio → Kyoto (10/12) — assento E para ver o Fuji', day: 'kt0' },
