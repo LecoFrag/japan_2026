@@ -1,5 +1,5 @@
 /* Service worker: deixa o roteiro disponível offline depois da primeira visita */
-const VERSION = 'jp26-v3';
+const VERSION = 'jp26-v4';
 const SHELL = [
   './', 'index.html', 'css/app.css', 'js/util.js', 'js/map.js', 'js/app.js',
   'data/places.js', 'data/terms.js', 'data/trip.js', 'data/info.js', 'data/generated.js',
@@ -32,10 +32,13 @@ self.addEventListener('fetch', (e) => {
     }));
     return;
   }
-  e.respondWith(fetch(req).then((res) => {
-    if (res.ok && (url.origin === location.origin || url.hostname.includes('cdnjs'))) caches.open(VERSION).then((c) => c.put(req, res.clone()));
+  // arquivos do próprio app: sempre conferir no servidor se há versão nova (ignora o cache de 10 min do GitHub)
+  const own = url.origin === location.origin;
+  const net = own ? fetch(req.url, { cache: 'no-cache' }) : fetch(req);
+  e.respondWith(net.then((res) => {
+    if (res.ok && (own || url.hostname.includes('cdnjs'))) caches.open(VERSION).then((c) => c.put(req, res.clone()));
     return res;
-  }).catch(() => caches.match(req).then((r) => r || caches.match('index.html'))));
+  }).catch(() => caches.match(req, { ignoreSearch: true }).then((r) => r || caches.match('index.html'))));
 });
 
 self.addEventListener('message', (e) => {
