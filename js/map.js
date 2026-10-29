@@ -51,6 +51,11 @@
     el.addEventListener('touchend', (e) => { if (!e.touches.length && !el.classList.contains('map-full')) map.dragging.disable(); }, { passive: true });
     map._embedTouch = true;
   }
+  /** Descarta um mapa com segurança (para animações de zoom em andamento antes de remover). */
+  M.destroy = (map) => {
+    if (!map) return;
+    try { map.stop(); map.off(); map.remove(); } catch (e) { /* mapa já removido */ }
+  };
   M.retheme = () => { /* o modo escuro dos mapas é feito via CSS (.tiles-base) */ };
 
   /* -------------------------------------------------- ícones */
@@ -229,7 +234,7 @@
     let touched = false;
     map.getContainer().addEventListener('pointerdown', () => { touched = true; }, { once: true });
     map.getContainer().addEventListener('wheel', () => { touched = true; }, { once: true });
-    map.on('resize', () => { if (!touched) fitDefault(); });
+    map.on('resize', () => { if (touched) return; if (hl) highlight(hl.legIdxs, hl.placeIds); else fitDefault(); });
 
     // controles extras: localizar, enquadrar o dia, tela cheia
     const Ctl = L.Control.extend({
@@ -322,8 +327,17 @@
     const el = map.getContainer();
     el.classList.toggle('map-full');
     const on = el.classList.contains('map-full');
-    Object.assign(el.style, on ? { position: 'fixed', inset: '0', zIndex: 970, height: '100%', borderRadius: '0' } : { position: '', inset: '', zIndex: '', height: '', borderRadius: '' });
+    Object.assign(el.style, on ? { position: 'fixed', inset: '0', zIndex: 2000, height: '100%', borderRadius: '0' } : { position: '', inset: '', zIndex: '', height: '', borderRadius: '' });
     document.body.style.overflow = on ? 'hidden' : '';
+    document.body.classList.toggle('map-full-on', on);
+    // botão grande para sair da tela cheia
+    let close = el.querySelector('.map-close');
+    if (on && !close) {
+      close = L.DomUtil.create('button', 'map-close', el);
+      close.type = 'button'; close.textContent = '✕ Fechar mapa';
+      L.DomEvent.disableClickPropagation(close);
+      close.addEventListener('click', () => M.toggleFull(map));
+    } else if (!on && close) close.remove();
     if (map._embedTouch) { if (on) map.dragging.enable(); else map.dragging.disable(); }
     setTimeout(() => map.invalidateSize(), 50);
   };

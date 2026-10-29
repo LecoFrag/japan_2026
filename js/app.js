@@ -72,6 +72,8 @@
     let nav = page;
     main.innerHTML = '';
     main.className = 'page-enter';
+    // remove a animação ao terminar (a transformação residual atrapalhava o mapa em tela cheia)
+    main.addEventListener('animationend', () => main.classList.remove('page-enter'), { once: true });
     void main.offsetWidth;
     if (page === 'home') renderHome();
     else if (page === 'dia') { nav = 'dia'; renderDay(parts[1]); }
@@ -201,7 +203,7 @@
       </div>`;
 
     const ov = M.overviewMap($('#ovMap'));
-    cleanup.push(() => ov.remove());
+    cleanup.push(() => M.destroy(ov));
     startCountdown();
     startHeroCanvas();
   }
@@ -415,9 +417,9 @@
     const side = hasMap ? `
       <aside class="day-side" id="daySide" style="${U.cssCity(c)}">
         <div class="map-tools">
-          ${zones.map((z, i) => z.name ? `<button class="zone-chip" data-zone="${i}"><i></i>${esc(z.name)}</button>` : '').join('')}
+          <button class="zone-chip map-min" id="mapToggle">⇥ Minimizar</button>
           <button class="zone-chip all-chip" id="mapAll" hidden>↺ Dia inteiro</button>
-          <button class="zone-chip map-toggle" id="mapToggle">▾ Ocultar mapa</button>
+          ${zones.map((z, i) => z.name ? `<button class="zone-chip" data-zone="${i}"><i></i>${esc(z.name)}</button>` : '').join('')}
         </div>
         <div class="day-map" id="dayMap"></div>
         <div class="map-legend"><span><i class="lg-walk"></i>a pé (rota real)</span><span><i class="lg-train"></i>trem / metrô / ônibus</span><span><i class="lg-zone"></i>área explorada a pé</span><span>🏨 hotel · 🚉 estação</span></div>
@@ -435,15 +437,12 @@
     if (hasMap) {
       const dm = M.dayMap($('#dayMap'), day);
       App.dayMap = dm;
-      cleanup.push(() => { dm.map.remove(); App.dayMap = null; document.body.style.overflow = ''; });
+      cleanup.push(() => { M.destroy(dm.map); App.dayMap = null; document.body.style.overflow = ''; });
       $$('[data-zone]').forEach((b) => b.addEventListener('click', () => { if (dm.isHighlighted()) { $$('.tl-card.sel, .leg.sel').forEach((x) => x.classList.remove('sel')); dm.clearHighlight(false); const a = $('#tlAll'); if (a) a.hidden = true; const m = $('#mapAll'); if (m) m.hidden = true; } dm.fitZone(+b.dataset.zone); }));
       // clicar num item da linha do tempo (ou num trecho) destaca só aquele pedaço do mapa
       const showMap = () => {
         const side = $('#daySide');
-        if (side.classList.contains('collapsed')) {
-          side.classList.remove('collapsed'); $('#mapToggle').textContent = '▾ Ocultar mapa';
-          setTimeout(() => dm.map.invalidateSize(), 380);
-        }
+        if (side.classList.contains('collapsed')) setCollapsed(false);
         const r = $('#dayMap').getBoundingClientRect();
         if (r.bottom < 80 || r.top > innerHeight - 80) side.scrollIntoView({ behavior: 'smooth', block: 'start' });
       };
@@ -476,16 +475,23 @@
       });
       [$('#tlAll'), $('#mapAll')].forEach((b) => b && b.addEventListener('click', () => App.clearStep()));
       cleanup.push(() => { App.clearStep = null; });
-      const tg = $('#mapToggle');
-      if (tg) {
-        if (U.store.get('mapCollapsed', false) && innerWidth <= 1100) { $('#daySide').classList.add('collapsed'); tg.textContent = '▸ Mostrar mapa'; }
-        tg.addEventListener('click', () => {
-          const s = $('#daySide'); s.classList.toggle('collapsed');
-          const col = s.classList.contains('collapsed'); U.store.set('mapCollapsed', col);
-          tg.textContent = col ? '▸ Mostrar mapa' : '▾ Ocultar mapa';
-          setTimeout(() => { dm.map.invalidateSize(); if (!col) dm.fitDefault(); }, 380);
-        });
+      // minimizar o mapa (celular): some do topo e vira uma aba na lateral direita
+      const tab = document.createElement('button');
+      tab.type = 'button'; tab.className = 'map-tab'; tab.style.cssText = U.cssCity(c);
+      tab.innerHTML = '<b>‹</b>🗺️ Mapa'; tab.setAttribute('aria-label', 'Mostrar o mapa');
+      document.body.appendChild(tab);
+      function setCollapsed(col) {
+        const sd = $('#daySide'); if (!sd) return;
+        sd.classList.toggle('collapsed', col);
+        document.body.classList.toggle('map-collapsed', col && innerWidth <= 1100);
+        U.store.set('mapCollapsed', col);
+        if (!col) setTimeout(() => { dm.map.invalidateSize(); if (!dm.isHighlighted()) dm.fitDefault(); }, 60);
       }
+      App.setMapCollapsed = setCollapsed;
+      cleanup.push(() => { tab.remove(); document.body.classList.remove('map-collapsed', 'map-full-on'); App.setMapCollapsed = null; });
+      $('#mapToggle').addEventListener('click', () => setCollapsed(true));
+      tab.addEventListener('click', () => setCollapsed(false));
+      if (U.store.get('mapCollapsed', false) && innerWidth <= 1100) setCollapsed(true);
     }
     // "ler mais" do texto de abertura (só aparece se o texto foi cortado)
     const intro = $('#dayIntro'), more = $('#introMore');
@@ -575,7 +581,7 @@
         <div class="mapall-map" id="allMap"></div>
       </div>`;
     const am = M.allMap($('#allMap'));
-    cleanup.push(() => am.map.remove());
+    cleanup.push(() => M.destroy(am.map));
     const kindOk = (p) => ({
       sights: !['estacao', 'hotel', 'aeroporto'].includes(p.t),
       games: p.t === 'games',
@@ -745,7 +751,7 @@
 
     // mapa com filiais + opcionais
     const am = M.allMap($('#optMap'));
-    cleanup.push(() => am.map.remove());
+    cleanup.push(() => M.destroy(am.map));
     const all = [...new Set([...branchIds, ...optIds])].filter((id) => PLACES[id]);
     const show = (c) => { const ids = all.filter((id) => c === 'all' || PLACES[id].c === c); am.render(ids); am.fit(ids); };
     show('tokyo');
@@ -783,9 +789,20 @@
 
       <section class="section"><div class="section-head"><div><div class="eyebrow">Planejamento</div><h2 class="h2">Pendências</h2></div>
         <div style="min-width:220px"><span class="muted" id="pctTxt">${pct()}% concluído</span><div class="progress"><i id="pctBar" style="width:${pct()}%"></i></div></div></div>
-        <div class="card"><ul class="todo-list" id="todo">
-          ${TODO.map((t) => { const d = t.day && U.dayById(t.day); return `<li class="${done[t.id] ? 'done' : ''}" style="${d ? U.cssCity(d.city) : ''}"><input type="checkbox" id="td-${t.id}" data-id="${t.id}" ${done[t.id] ? 'checked' : ''}><label for="td-${t.id}">${esc(t.t)}</label>${d ? `<a href="#/dia/${d.id}">${esc(U.dayLabel(d))} →</a>` : t.link ? `<a href="${t.link}">ver →</a>` : ''}</li>`; }).join('')}
-        </ul></div>
+        <p class="muted" style="font-size:13.5px;margin:-6px 0 14px">Toque no título de cada item para ver as informações: o que é, quando e onde fazer, e o que não esquecer.</p>
+        <div id="todo">
+        ${(window.TODO_GROUPS || [{ id: undefined, t: '', icon: '' }]).map((g) => {
+          const items = TODO.filter((t) => t.g === g.id);
+          if (!items.length) return '';
+          return `<div class="todo-group"><h3>${g.icon} ${esc(g.t)} <small>${esc(g.sub || '')}</small></h3>
+            <div class="card"><ul class="todo-list">
+            ${items.map((t) => { const d = t.day && U.dayById(t.day); return `<li class="${done[t.id] ? 'done' : ''}" style="${d ? U.cssCity(d.city) : ''}">
+              <input type="checkbox" id="td-${t.id}" data-id="${t.id}" ${done[t.id] ? 'checked' : ''} aria-label="Marcar como feito">
+              <button type="button" class="todo-t" data-info="${t.id}"><span>${esc(t.t)}</span>${t.when ? `<small>🕒 ${esc(t.when)}</small>` : ''}</button>
+              <span class="todo-i" aria-hidden="true">ⓘ</span></li>`; }).join('')}
+            </ul></div></div>`;
+        }).join('')}
+        </div>
         <p class="muted" style="font-size:12.5px;margin-top:8px">As marcações ficam salvas neste aparelho.</p></section>
 
       <section class="section"><div class="section-head"><div><div class="eyebrow">Dezembro</div><h2 class="h2">Clima esperado</h2></div></div>
@@ -803,11 +820,40 @@
         <div class="dr-actions"><button class="btn dark" id="offlineBtn">⬇️ Preparar para uso offline</button></div></div></section>
       ${footer()}</div>`;
 
-    $('#todo').addEventListener('change', (e) => {
-      const id = e.target.dataset.id; if (!id) return;
-      done[id] = e.target.checked; U.store.set('todo', done);
-      e.target.closest('li').classList.toggle('done', e.target.checked);
+    const setDone = (id, val) => {
+      done[id] = val; U.store.set('todo', done);
+      const cb = document.getElementById('td-' + id);
+      if (cb) { cb.checked = val; cb.closest('li').classList.toggle('done', val); }
       $('#pctTxt').textContent = pct() + '% concluído'; $('#pctBar').style.width = pct() + '%';
+    };
+    $('#todo').addEventListener('change', (e) => { const id = e.target.dataset.id; if (id) setDone(id, e.target.checked); });
+    // janela com as informações extras de cada pendência
+    $('#todo').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-info]'); if (!b) return;
+      const t = TODO.find((x) => x.id === b.dataset.info); if (!t) return;
+      const d = t.day && U.dayById(t.day);
+      const bg = document.createElement('div');
+      bg.className = 'modal-bg';
+      bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="mdT" style="${d ? U.cssCity(d.city) : ''}">
+        <button type="button" class="modal-x" aria-label="Fechar">✕</button>
+        <h3 id="mdT">${esc(t.t)}</h3>
+        ${t.when ? `<div class="modal-when">🕒 <b>Quando:</b> ${esc(t.when)}</div>` : ''}
+        <ul class="modal-list">${(t.x || []).map((p) => `<li>${U.linkify(p)}</li>`).join('')}</ul>
+        <div class="dr-actions">
+          ${(t.links || []).map((l) => `<a class="btn sm" href="${esc(l.u)}" target="_blank" rel="noopener">${esc(l.t)} ↗</a>`).join('')}
+          ${d ? `<a class="btn sm" href="#/dia/${d.id}">Ver o dia: ${esc(U.dayLabel(d))}</a>` : t.link ? `<a class="btn sm" href="${t.link}">Abrir →</a>` : ''}
+          <button type="button" class="btn sm ${done[t.id] ? '' : 'primary'}" data-toggle-done>${done[t.id] ? '↺ Marcar como pendente' : '✓ Marcar como feito'}</button>
+        </div></div>`;
+      const close = () => { bg.remove(); document.removeEventListener('keydown', onKey); };
+      const onKey = (ev) => { if (ev.key === 'Escape') close(); };
+      bg.addEventListener('click', (ev) => {
+        if (ev.target === bg || ev.target.closest('.modal-x') || ev.target.closest('a[href^="#"]') || ev.target.closest('.gl')) close();
+        if (ev.target.closest('[data-toggle-done]')) { setDone(t.id, !done[t.id]); close(); }
+      });
+      document.addEventListener('keydown', onKey);
+      document.body.appendChild(bg);
+      cleanup.push(close);
+      bg.querySelector('.modal-x').focus({ preventScroll: true });
     });
     $$('[data-say]').forEach((b) => b.addEventListener('click', () => {
       if (!('speechSynthesis' in window)) return U.toast('Seu navegador não tem leitura em voz alta');
@@ -848,7 +894,7 @@
     const [kind, id] = key.split(/:(.+)/);
     const x = kind === 'p' ? PLACES[id] : TERMS[id];
     if (!x) return;
-    if (miniMap) { miniMap.remove(); miniMap = null; }
+    if (miniMap) { M.destroy(miniMap); miniMap = null; }
     const photoId = kind === 'p' ? id : 't:' + id;
     const ph = U.photo(photoId);
     const days = kind === 'p' ? U.placeDays(id) : [];
@@ -890,7 +936,7 @@
     if (!drawerOpen) return;
     drawer.classList.remove('open'); drawer.setAttribute('aria-hidden', 'true'); scrim.classList.remove('show'); drawerOpen = false;
     document.body.style.overflow = '';
-    setTimeout(() => { scrim.hidden = true; if (miniMap) { miniMap.remove(); miniMap = null; } }, 300);
+    setTimeout(() => { scrim.hidden = true; if (miniMap) { M.destroy(miniMap); miniMap = null; } }, 300);
     if (!fromPop && history.state && history.state.drawer) history.back();
   }
   $('#drawerClose').addEventListener('click', () => closeDrawer());
@@ -922,7 +968,7 @@
   /* ================================================================ busca rápida */
   const pop = $('#searchPop'), si = $('#searchInput'), sr = $('#searchResults');
   const normS = (s) => (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-  function openSearch() { pop.hidden = false; si.value = ''; doSearch(); setTimeout(() => si.focus(), 30); }
+  function openSearch() { pop.hidden = false; si.value = ''; si.focus(); doSearch(); }
   function closeSearch() { pop.hidden = true; }
   function doSearch() {
     const q = normS(si.value.trim());
@@ -939,6 +985,7 @@
     sr.innerHTML = res.length ? res.map((r) => `<button class="pl-item" data-open="${r.key}">${U.photo(r.ph) ? `<img src="${esc(U.photo(r.ph).url)}" alt="" loading="lazy">` : `<span class="ph">${r.sub.split(' ')[0]}</span>`}<span><b>${esc(r.x.n)}</b><small>${esc(r.sub)}</small></span></button>`).join('') : '<p class="empty">Nada encontrado.</p>';
   }
   $('#searchBtn').addEventListener('click', openSearch);
+  $('#searchClose').addEventListener('click', closeSearch);
   si.addEventListener('input', doSearch);
   si.addEventListener('keydown', (e) => { if (e.key === 'Enter') { const f = sr.querySelector('[data-open]'); if (f) { closeSearch(); App.openEntry(f.dataset.open); } } });
   pop.addEventListener('click', (e) => { if (e.target === pop) closeSearch(); const b = e.target.closest('[data-open]'); if (b) closeSearch(); });
