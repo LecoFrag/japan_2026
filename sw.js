@@ -1,5 +1,5 @@
 /* Service worker: deixa o roteiro disponível offline depois da primeira visita */
-const VERSION = 'jp26-v1';
+const VERSION = 'jp26-v2';
 const SHELL = [
   './', 'index.html', 'css/app.css', 'js/util.js', 'js/map.js', 'js/app.js',
   'data/places.js', 'data/terms.js', 'data/trip.js', 'data/info.js', 'data/generated.js',
@@ -40,6 +40,17 @@ self.addEventListener('fetch', (e) => {
 
 self.addEventListener('message', (e) => {
   if (e.data && e.data.type === 'precache') {
-    caches.open('jp26-media').then((c) => Promise.all(e.data.urls.map((u) => c.match(u).then((hit) => hit || fetch(u, { mode: 'no-cors' }).then((r) => c.put(u, r)).catch(() => {})))));
+    // baixa aos poucos (6 por vez) para não sobrecarregar a conexão
+    caches.open('jp26-media').then(async (c) => {
+      const list = e.data.urls.slice();
+      const worker = async () => {
+        while (list.length) {
+          const u = list.shift();
+          if (await c.match(u)) continue;
+          try { const r = await fetch(u, { mode: 'cors' }); if (r.ok) await c.put(u, r); } catch (err) { /* ignora */ }
+        }
+      };
+      await Promise.all(Array.from({ length: 6 }, worker));
+    });
   }
 });

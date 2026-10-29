@@ -32,7 +32,7 @@
   U.img = (id, cls = '', alt = '') => {
     const ph = U.photo(id);
     const p = U.place(id) || window.TERMS[id.replace(/^t:/, '')];
-    if (ph && ph.url) return `<img src="${U.esc(ph.url)}" alt="${U.esc(alt || (p && p.n) || '')}" loading="lazy" decoding="async" class="${cls}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph-tile',innerHTML:'<span>📍</span>'}))">`;
+    if (ph && ph.url) return `<img crossorigin="anonymous" src="${U.esc(ph.url)}" alt="${U.esc(alt || (p && p.n) || '')}" loading="lazy" decoding="async" class="${cls}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph-tile',innerHTML:'<span>📍</span>'}))">`;
     const icon = p ? (p.t ? U.typeOf(p).icon : (window.TERM_CATS[p.cat] || {}).icon || '📖') : '📍';
     return `<div class="ph-tile"><span>${icon}</span></div>`;
   };
@@ -56,10 +56,29 @@
   U.fmtMin = (min) => { min = Math.max(1, Math.round(min)); return min < 60 ? `${min} min` : `${Math.floor(min / 60)}h${String(min % 60).padStart(2, '0')}`; };
 
   /* -------------------------------------------------- Google Maps */
+  /** Nome que o Google Maps reconhece (verificado) — o nome japonês é o mais confiável. */
+  U.gmName = (id) => {
+    const p = U.place(id);
+    if (p.g) return p.g;
+    return (p.jp || p.n).replace(/\s*\(.*?\)\s*/g, '').split('・')[0].trim();
+  };
   U.gmPlace = (id) => {
     const p = U.place(id);
-    const q = p.g || `${p.n.replace(/\(.*?\)/g, '').trim()}, ${U.city(p.c).n === 'Monte Fuji (Plano B)' ? 'Yamanashi' : U.city(p.c).n}, Japan`;
+    const q = p.gmc ? `${p.ll[0]},${p.ll[1]}` : U.gmName(id);
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+  };
+  /** Rota da localização ATUAL até o lugar: sem origem, o Google usa onde você está
+      e escolhe sozinho estação, linha e caminhada. */
+  U.gmGo = (id) => {
+    const p = U.place(id);
+    const dest = p.gmc ? `${p.ll[0]},${p.ll[1]}` : U.gmName(id);
+    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(dest)}&travelmode=transit`;
+  };
+  /** Destino "de verdade" a partir de uma posição da rota: pula estações (o Google decide a estação). */
+  U.realTarget = (day, routeIdx) => {
+    const r = day.route || [];
+    for (let k = routeIdx; k < r.length; k++) { const p = U.place(r[k].p); if (p && p.t !== 'estacao') return r[k].p; }
+    return r[routeIdx] ? r[routeIdx].p : null;
   };
   const gmMode = { walk: 'walking', taxi: 'driving', bus: 'transit', train: 'transit', subway: 'transit', shinkansen: 'transit', plane: 'transit' };
   U.gmDir = (fromId, toId, mode = 'walk') => {

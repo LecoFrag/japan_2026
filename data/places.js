@@ -10,7 +10,8 @@
      d    o que é (texto do glossário)
      tip  (opcional) dica prática / horário
      aka  (opcional) outros nomes que, ao aparecer no texto, viram link
-     g    (opcional) texto de busca no Google Maps
+     g    (opcional) nome exato que o Google Maps reconhece (verificado); sem ele, usa o nome japonês
+     gmc  (opcional) true = o Google acha o nome ambíguo; "Ir até lá" usa a coordenada exata
    Depois de editar este arquivo, rode:  node tools/build.mjs
    ========================================================================= */
 
@@ -49,6 +50,7 @@ window.PLACES = {
     n: 'Tóquio', jp: '東京 (Tōkyō)', t: 'bairro', c: 'tokyo', ll: [35.68120, 139.76710], w: 'Tokyo',
     d: '"Capital do Leste": capital do Japão desde 1868 (antes se chamava Edo) e a maior região metropolitana do mundo, com ~37 milhões de pessoas. Não tem um centro único — é uma colcha de bairros com personalidades muito diferentes (Shinjuku, Shibuya, Asakusa, Ginza…), ligados por uma das redes de trem mais eficientes do planeta.',
     aka: ['Tokyo', 'Tóquio'],
+    g: '東京都',
   },
   'hotel-tokyo': {
     n: 'APA Hotel Higashi-Shinjuku Kabukicho Tower', jp: 'アパホテル〈東新宿 歌舞伎町タワー〉',
@@ -132,17 +134,20 @@ window.PLACES = {
     cs: 'Akihabara Chuo-dori',
     d: 'Avenida principal de Akihabara, ladeada por telões e lojas de vários andares. Aos domingos à tarde (normalmente 13h–17h/18h) vira "Hokosha Tengoku" — paraíso dos pedestres, com a rua fechada para carros.',
     tip: '06/12/2026 é domingo: aproveite a rua fechada à tarde.', aka: ['Chuo-dori de Akihabara'],
+    g: '秋葉原 中央通り',
   },
   'super-potato': {
     n: 'Super Potato Akihabara', jp: 'スーパーポテト', t: 'games', c: 'tokyo', ll: [35.69937, 139.77074], w: 'Super Potato', cs: 'Super Potato Akihabara',
     d: 'A loja de retro games mais famosa do Japão: três andares de cartuchos de Famicom, Super Famicom, Mega Drive, consoles antigos e um mini-fliperama retrô no último andar.',
     aka: ['Super Potato'],
+    g: 'スーパーポテト 秋葉原店',
   },
   'gigo-akiba': {
     n: 'GiGO Akihabara (ex-SEGA)', jp: 'GiGO秋葉原', t: 'games', c: 'tokyo', ll: [35.69990, 139.77135],
     cs: 'Sega Akihabara',
     d: 'Game centers de vários andares (antigos fliperamas da SEGA): máquinas de pegar prêmios (UFO catcher), jogos de ritmo, cabines de purikura e arcades de luta. Uma experiência muito japonesa.',
     aka: ['GiGO'],
+    g: 'GiGO 秋葉原1号館',
   },
   'radio-kaikan': {
     n: 'Akihabara Radio Kaikan', jp: '秋葉原ラジオ会館', t: 'games', c: 'tokyo', ll: [35.69975, 139.77165], w: 'Akihabara Radio Kaikan', cs: 'Akihabara Radio Kaikan',
@@ -174,6 +179,7 @@ window.PLACES = {
   'kaminarimon': {
     n: 'Kaminarimon', jp: '雷門', t: 'historico', c: 'tokyo', ll: [35.71106, 139.79630], w: 'Kaminarimon',
     d: '"Portão do Trovão": a entrada monumental do Senso-ji, com a enorme lanterna vermelha de ~700 kg e as estátuas dos deuses do vento (Fujin) e do trovão (Raijin). Um dos cartões-postais de Tóquio.',
+    g: '雷門 浅草寺',
   },
   'nakamise': {
     n: 'Nakamise-dori', jp: '仲見世通り', t: 'rua', c: 'tokyo', ll: [35.71270, 139.79640], w: 'Nakamise-dōri', cs: 'Nakamise Asakusa',
@@ -205,6 +211,7 @@ window.PLACES = {
     n: 'Lago Shinobazu', jp: '不忍池', t: 'parque', c: 'tokyo', ll: [35.71180, 139.77020], w: 'Shinobazu Pond',
     d: 'Lago no sul do Parque Ueno com um templo numa ilhota (Bentendo). No verão fica coberto de lótus; em dezembro é um passeio calmo com patos e vista dos prédios.',
     aka: ['Shinobazu'],
+    g: '不忍池弁天堂',
   },
   'ameyoko': {
     n: 'Ameyoko', jp: 'アメ横', t: 'mercado', c: 'tokyo', ll: [35.71030, 139.77450], w: 'Ameya-Yokochō',
@@ -230,6 +237,7 @@ window.PLACES = {
     n: 'Estação Meiji-jingumae (Harajuku)', jp: '明治神宮前〈原宿〉駅', t: 'estacao', c: 'tokyo', ll: [35.66880, 139.70450],
     w: 'Meiji-jingumae Station',
     d: 'Estação de metrô (linhas Fukutoshin e Chiyoda) no cruzamento de Omotesando com Meiji-dori. Da Higashi-Shinjuku são só 3 paradas diretas pela linha Fukutoshin.',
+    g: '明治神宮前駅',
   },
   'harajuku-sta': {
     n: 'Estação Harajuku', jp: '原宿駅', t: 'estacao', c: 'tokyo', ll: [35.67020, 139.70270], w: 'Harajuku Station',
@@ -243,6 +251,7 @@ window.PLACES = {
   'harajuku': {
     n: 'Harajuku', jp: '原宿', t: 'bairro', c: 'tokyo', ll: [35.67100, 139.70500], w: 'Harajuku',
     d: 'Bairro símbolo da moda jovem e das subculturas japonesas (kawaii, lolita, streetwear). Mistura lojas excêntricas, crepes, brechós e vielas criativas.',
+    g: '原宿 渋谷区',
   },
   'takeshita': {
     n: 'Takeshita Street', jp: '竹下通り', t: 'rua', c: 'tokyo', ll: [35.67150, 139.70480], w: 'Takeshita Street',
@@ -276,7 +285,7 @@ window.PLACES = {
     n: 'MEGA Don Quijote Shibuya', jp: 'MEGAドン・キホーテ渋谷本店', t: 'loja', c: 'tokyo', ll: [35.66045, 139.69784],
     cs: 'MEGA Don Quijote Shibuya',
     d: 'Uma das maiores Don Quijote de Tóquio, com vários andares (inclusive mercado), no meio de Shibuya, pertinho da Center Gai. Abre 24h.',
-    g: 'MEGAドン・キホーテ渋谷本店',
+    g: 'MEGAドン・キホーテ 渋谷本店',
   },
   'shibuya': {
     n: 'Shibuya', jp: '渋谷', t: 'bairro', c: 'tokyo', ll: [35.65980, 139.70000], w: 'Shibuya',
@@ -301,6 +310,7 @@ window.PLACES = {
     n: 'Center Gai', jp: 'センター街', t: 'rua', c: 'tokyo', ll: [35.66020, 139.69840], w: 'Center Gai',
     d: 'Rua de pedestres que sai do Shibuya Crossing, cheia de lojas, fast-food, game centers e karaokês. É o coração jovem e caótico de Shibuya.',
     aka: ['Center-gai'],
+    g: '渋谷センター街',
   },
   'shibuya-sky': {
     n: 'Shibuya Sky', jp: '渋谷スカイ', t: 'mirante', c: 'tokyo', ll: [35.65853, 139.70223], w: 'Shibuya Scramble Square',
@@ -365,11 +375,13 @@ window.PLACES = {
     n: 'Portão Ote-mon', jp: '大手門', t: 'historico', c: 'tokyo', ll: [35.68580, 139.76140], w: 'Ōte-mon (Edo Castle)',
     d: 'O antigo portão principal do Castelo de Edo e hoje a entrada mais usada dos East Gardens. Um bom exemplo de "masugata": portão em L feito para atrasar invasores.',
     aka: ['Ote-mon', 'Otemon'],
+    g: 'Otemon Gate Imperial Palace',
   },
   'tokyo-sta': {
     n: 'Tokyo Station', jp: '東京駅', t: 'historico', c: 'tokyo', ll: [35.68120, 139.76710], w: 'Tokyo Station',
     d: 'Estação central de Tóquio (1914), com fachada de tijolos vermelhos de 335 m restaurada em 2012 — lembra a Estação Central de Amsterdã. Dentro: as cúpulas do lado Marunouchi, a Ramen Street e a Tokyo Character Street. É também de onde saem os Shinkansen.',
     aka: ['Estação de Tóquio', 'Estação Tóquio'],
+    g: '東京駅丸の内駅舎',
   },
   'character-street': {
     n: 'Tokyo Character Street', jp: '東京キャラクターストリート', t: 'games', c: 'tokyo', ll: [35.68030, 139.76840],
@@ -387,6 +399,7 @@ window.PLACES = {
     n: 'KITTE (terraço com vista da Tokyo Station)', jp: 'KITTE 丸の内', t: 'mirante', c: 'tokyo', ll: [35.67960, 139.76470], w: 'JP Tower',
     d: 'Shopping no antigo prédio dos Correios, em frente à Tokyo Station. O terraço-jardim do 6º andar (KITTE Garden) é gratuito e tem a melhor vista da fachada de tijolos da estação e dos trilhos do Shinkansen.',
     aka: ['KITTE', 'KITTE Garden'],
+    g: 'KITTE丸の内',
   },
   'marunouchi': {
     n: 'Marunouchi', jp: '丸の内', t: 'bairro', c: 'tokyo', ll: [35.68150, 139.76400], w: 'Marunouchi',
@@ -407,6 +420,7 @@ window.PLACES = {
     cs: 'Ginza Chuo-dori',
     d: 'Avenida principal de Ginza. O cruzamento Ginza 4-chome, com o relógio da loja Wako (1932), é o símbolo do bairro. Aos sábados, domingos e feriados vira rua de pedestres à tarde.',
     aka: ['Chuo-dori de Ginza', 'Wako', 'Ginza 4-chome'],
+    g: '和光本館',
   },
   'ginza-six': {
     n: 'GINZA SIX', jp: 'ギンザ シックス', t: 'loja', c: 'tokyo', ll: [35.66960, 139.76410], w: 'Ginza Six',
@@ -476,11 +490,13 @@ window.PLACES = {
     n: 'Lago Kawaguchi', jp: '河口湖', t: 'natureza', c: 'fuji', ll: [35.51700, 138.75500], w: 'Lake Kawaguchi',
     d: 'O mais acessível dos Cinco Lagos do Fuji, com vistas clássicas da montanha refletida na água. A margem norte (Oishi Park) tem o melhor ângulo.',
     aka: ['Kawaguchiko', 'Kawaguchi'],
+    g: 'Lake Kawaguchi',
   },
   'chureito': {
     n: 'Pagode Chureito', jp: '忠霊塔', t: 'historico', c: 'fuji', ll: [35.50149, 138.80127], w: 'Chureito Pagoda',
     d: 'Pagode vermelho de 5 andares no Parque Arakurayama Sengen, com o Monte Fuji ao fundo — talvez a foto mais famosa do Japão. São ~400 degraus até o mirante.',
     aka: ['Chureito', 'Arakurayama Sengen'],
+    g: 'Chureito Pagoda',
   },
   'shimoyoshida-sta': {
     n: 'Estação Shimoyoshida', jp: '下吉田駅', t: 'estacao', c: 'fuji', ll: [35.49773, 138.80353], w: 'Shimoyoshida Station',
@@ -490,12 +506,14 @@ window.PLACES = {
     n: 'Oishi Park', jp: '大石公園', t: 'parque', c: 'fuji', ll: [35.52329, 138.74654],
     cs: 'Oishi Park Kawaguchiko Fuji',
     d: 'Parque à beira do lago Kawaguchi, na margem norte, com vista frontal do Fuji sobre a água. Tem café e loja de produtos locais.',
+    g: '大石公園 富士河口湖町',
   },
 
   /* ============================== KYOTO ============================== */
   'kyoto-city': {
     n: 'Kyoto', jp: '京都 (Kyōto)', t: 'bairro', c: 'kyoto', ll: [35.01160, 135.76810], w: 'Kyoto', img: 'Yasaka-dori early morning with street lanterns and the Tower of Yasaka (Hokan-ji Temple), Kyoto, Japan.jpg',
     d: 'Capital imperial do Japão por mais de mil anos (794–1868). Tem cerca de 1.600 templos, 400 santuários e 17 Patrimônios Mundiais, e foi poupada dos bombardeios da Segunda Guerra. A cidade é um tabuleiro de ruas retas, cercado de montanhas por três lados.',
+    g: '京都市',
   },
   'kyoto-sta': {
     n: 'Estação Kyoto', jp: '京都駅', t: 'estacao', c: 'kyoto', ll: [34.98580, 135.75880], w: 'Kyoto Station',
@@ -517,6 +535,7 @@ window.PLACES = {
     n: 'Estação Shijo / Karasuma', jp: '四条駅・烏丸駅', t: 'estacao', c: 'kyoto', ll: [35.00370, 135.75950], w: 'Shijō Station (Kyoto)',
     d: 'Duas estações interligadas embaixo do cruzamento Shijo-Karasuma: Shijo (metrô linha Karasuma, para a Kyoto Station) e Karasuma (trem Hankyu, para Arashiyama e Osaka-Umeda). A ~3 min do hotel.',
     aka: ['Shijo', 'Karasuma', 'Shijo-Karasuma', 'Shijo/Karasuma'],
+    g: '四条駅 京都市営地下鉄',
   },
   'nishiki': {
     n: 'Mercado Nishiki', jp: '錦市場', t: 'mercado', c: 'kyoto', ll: [35.00505, 135.76480], w: 'Nishiki Market',
@@ -528,6 +547,7 @@ window.PLACES = {
     cs: 'Shijo Kawaramachi Kyoto',
     d: 'Principal cruzamento comercial de Kyoto: lojas de departamento (Takashimaya, Daimaru), galerias cobertas (Teramachi e Shinkyogoku) e restaurantes. Fica entre o hotel e o rio Kamo.',
     aka: ['Kawaramachi', 'Shijo/Kawaramachi', 'Shijo-dori', 'Teramachi'],
+    g: '京都髙島屋',
   },
   'nintendo-kyoto': {
     n: 'Nintendo KYOTO (Takashimaya)', jp: 'Nintendo KYOTO', t: 'games', c: 'kyoto', ll: [35.00307, 135.76843],
@@ -544,11 +564,14 @@ window.PLACES = {
     n: 'Pontocho', jp: '先斗町', t: 'rua', c: 'kyoto', ll: [35.00560, 135.77090], w: 'Pontochō',
     d: 'Viela de pedra estreitíssima (~500 m) paralela ao rio Kamo, iluminada por lanternas, com casas de chá, restaurantes e, às vezes, maikos a caminho do trabalho. Um dos lugares mais atmosféricos do Japão à noite.',
     tip: 'Muitos restaurantes têm preço alto; olhe o cardápio na porta. Evite fotografar pessoas sem permissão.', aka: ['Pontochō'],
+    g: '先斗町通',
   },
   'kamo-river': {
     n: 'Rio Kamo', jp: '鴨川', t: 'natureza', c: 'kyoto', ll: [35.00450, 135.77180], w: 'Kamo River',
     d: 'Rio que corta o centro de Kyoto, com margens de passeio onde moradores caminham e sentam à beira d\'água. Separa a região do hotel (oeste) de Gion (leste).',
     aka: ['Kamogawa', 'rio Kamo'],
+    g: '鴨川 京都 四条大橋',
+    gmc: true,
   },
   'gion': {
     n: 'Gion', jp: '祇園', t: 'bairro', c: 'kyoto', ll: [35.00370, 135.77520], w: 'Gion',
@@ -571,10 +594,12 @@ window.PLACES = {
     n: 'Santuário Yasaka', jp: '八坂神社', t: 'santuario', c: 'kyoto', ll: [35.00365, 135.77850], w: 'Yasaka Shrine',
     d: 'Santuário xintoísta com mais de 1.350 anos, no fim da rua Shijo, protetor de Gion. Seu salão de dança é coberto por centenas de lanternas que acendem à noite — lindo depois do pôr do sol. Aberto 24h e gratuito.',
     aka: ['Yasaka Shrine', 'Yasaka-jinja', 'Yasaka'],
+    g: 'Yasaka Shrine Kyoto',
   },
   'inari-sta': {
     n: 'Estação JR Inari', jp: '稲荷駅', t: 'estacao', c: 'kyoto', ll: [34.96720, 135.77000], w: 'Inari Station',
     d: 'Estação JR (linha Nara) bem em frente ao grande torii do Fushimi Inari. A linha Nara também segue direto até Uji — por isso o dia 11 flui sem voltar ao centro.',
+    g: 'JR稲荷駅',
   },
   'fushimi-inari': {
     n: 'Fushimi Inari Taisha', jp: '伏見稲荷大社', t: 'santuario', c: 'kyoto', ll: [34.96714, 135.77267], w: 'Fushimi Inari-taisha',
@@ -594,6 +619,7 @@ window.PLACES = {
   'uji': {
     n: 'Uji', jp: '宇治', t: 'bairro', c: 'kyoto', ll: [34.89100, 135.80500], w: 'Uji, Kyoto',
     d: 'Cidade ao sul de Kyoto, capital histórica do chá verde japonês (o matcha de Uji é considerado o melhor do país) e cenário dos capítulos finais do "Conto de Genji", romance do ano 1000. É também a cidade-sede do Nintendo Museum.',
+    g: '宇治市',
   },
   'byodoin-omotesando': {
     n: 'Byodo-in Omotesando (rua do chá)', jp: '平等院表参道', t: 'rua', c: 'kyoto', ll: [34.89030, 135.80640],
@@ -610,6 +636,7 @@ window.PLACES = {
     n: 'Ponte Uji e rio Uji', jp: '宇治橋', t: 'natureza', c: 'kyoto', ll: [34.89300, 135.80580], w: 'Uji Bridge',
     d: 'Uma das pontes mais antigas do Japão (fundada em 646), sobre o rio Uji, de águas rápidas e cercado de montanhas. A margem do rio é perfeita para caminhar depois do Byodo-in; há uma estátua de Murasaki Shikibu, autora do Conto de Genji.',
     aka: ['Rio Uji', 'rio Uji', 'Uji River', 'Ujibashi'],
+    g: 'Uji Bridge',
   },
   'jr-ogura-sta': {
     n: 'Estação JR Ogura', jp: 'JR小倉駅', t: 'estacao', c: 'kyoto', ll: [34.88915, 135.78629],
@@ -625,6 +652,7 @@ window.PLACES = {
   'higashiyama': {
     n: 'Higashiyama', jp: '東山', t: 'bairro', c: 'kyoto', ll: [34.99850, 135.78150], w: 'Higashiyama-ku, Kyoto',
     d: '"Montanhas do Leste": o distrito histórico no sopé das colinas a leste do rio Kamo. Concentra a Kyoto mais preservada — Kiyomizu-dera, ladeiras de pedra com casas de madeira, o Pagode Yasaka, Kodai-ji e Gion. É o coração do nosso dia 12.',
+    g: '京都市東山区',
   },
   'kiyomizu': {
     n: 'Kiyomizu-dera', jp: '清水寺', t: 'templo', c: 'kyoto', ll: [34.99485, 135.78504], w: 'Kiyomizu-dera',
@@ -635,17 +663,20 @@ window.PLACES = {
     n: 'Sannenzaka', jp: '三年坂', t: 'rua', c: 'kyoto', ll: [34.99640, 135.78150], w: 'Sannenzaka',
     d: 'Ladeira de pedra com escadarias e casas de madeira preservadas do período Edo, cheia de lojas de cerâmica, doces, picles e chá. Diz a lenda que quem tropeça aqui terá 3 anos de azar — vá com calma!',
     aka: ['Sannen-zaka'],
+    gmc: true,
   },
   'ninenzaka': {
     n: 'Ninenzaka', jp: '二年坂', t: 'rua', c: 'kyoto', ll: [34.99800, 135.78060],
     cs: 'Ninenzaka Kyoto',
     d: 'Continuação natural de Sannenzaka, com o mesmo clima de Kyoto antiga. Aqui fica o famoso Starbucks em uma machiya de 100 anos, com tatames.',
     aka: ['Ninen-zaka'],
+    g: 'Ninenzaka Kyoto',
   },
   'yasaka-pagoda': {
     n: 'Pagode Yasaka (Hokan-ji)', jp: '八坂の塔', t: 'templo', c: 'kyoto', ll: [34.99856, 135.77920], w: 'Hōkan-ji',
     d: 'Pagode de 5 andares e 46 m (reconstruído em 1440) que desponta no meio das ruas antigas de Higashiyama. A vista dele pela rua Yasaka-dori é uma das fotos mais clássicas de Kyoto.',
     aka: ['Yasaka Pagoda', 'Hokan-ji', 'Yasaka-no-to'],
+    g: 'Yasaka Pagoda Kyoto',
   },
   'nene-no-michi': {
     n: 'Nene-no-michi', jp: 'ねねの道', t: 'rua', c: 'kyoto', ll: [35.00080, 135.78020],
@@ -657,6 +688,7 @@ window.PLACES = {
     n: 'Kodai-ji', jp: '高台寺', t: 'templo', c: 'kyoto', ll: [35.00060, 135.78120], w: 'Kōdai-ji',
     d: 'Templo zen (1606) construído por Nene em memória de Hideyoshi, com jardins de pedra, um bosque de bambu e salões de chá. Opcional no dia — entra se houver vontade.',
     aka: ['Kodaiji', 'Kōdai-ji'],
+    g: 'Kodaiji Temple',
   },
   'maruyama': {
     n: 'Parque Maruyama', jp: '円山公園', t: 'parque', c: 'kyoto', ll: [35.00350, 135.78080], w: 'Maruyama Park',
@@ -671,16 +703,19 @@ window.PLACES = {
   'randen-arashiyama-sta': {
     n: 'Estação Arashiyama (Randen)', jp: '嵐山駅〈嵐電〉', t: 'estacao', c: 'kyoto', ll: [35.01522, 135.67770], w: 'Arashiyama Station (Keifuku)',
     d: 'Estação final do Randen, no meio da rua principal de Arashiyama, a 2 min do Tenryu-ji. Tem a "Kimono Forest": 600 postes iluminados com tecidos de kimono.',
+    g: '嵐電 嵐山駅',
   },
   'arashiyama': {
     n: 'Arashiyama', jp: '嵐山', t: 'bairro', c: 'kyoto', ll: [35.01250, 135.67700], w: 'Arashiyama',
     d: 'Região no oeste de Kyoto, aos pés das montanhas, onde a nobreza da era Heian construía casas de veraneio. Combina o bambuzal, templos zen, o rio Hozu/Katsura, a ponte Togetsukyo e a montanha dos macacos.',
     aka: ['Arashiyama / Saga', 'Sagano'],
+    g: '嵐山 京都',
   },
   'bamboo-grove': {
     n: 'Bambuzal de Arashiyama', jp: '竹林の小径', t: 'natureza', c: 'kyoto', ll: [35.01700, 135.67180], w: 'Sagano Bamboo Forest',
     d: 'Caminho de ~400 m entre bambus gigantes que chegam a 20 m de altura e fazem um som característico com o vento (está na lista oficial de "100 paisagens sonoras do Japão"). Cedo pela manhã é mágico; a partir das 9h30 lota.',
     tip: 'Aberto 24h e gratuito.', aka: ['Bamboo Grove', 'Arashiyama Bamboo Grove', 'bambuzal'],
+    gmc: true,
   },
   'tenryuji': {
     n: 'Tenryu-ji', jp: '天龍寺', t: 'templo', c: 'kyoto', ll: [35.01560, 135.67360], w: 'Tenryū-ji',
@@ -711,6 +746,7 @@ window.PLACES = {
   'osaka-city': {
     n: 'Osaka', jp: '大阪 (Ōsaka)', t: 'bairro', c: 'osaka', ll: [34.69370, 135.50220], w: 'Osaka',
     d: 'Terceira maior cidade do Japão e histórico centro comercial do país — a "cozinha do Japão". Mais barulhenta, descontraída e bem-humorada que Tóquio, com fama de ter o povo mais simpático e a melhor comida de rua (takoyaki, okonomiyaki, kushikatsu).',
+    g: '大阪市',
   },
   'hotel-osaka': {
     n: 'GRIDS Premium Hotel Osaka Namba', jp: 'グリッズプレミアムホテル大阪なんば', t: 'hotel', c: 'osaka', ll: [34.66470, 135.49930],
@@ -727,6 +763,7 @@ window.PLACES = {
     n: 'Namba', jp: '難波', t: 'bairro', c: 'osaka', ll: [34.66550, 135.50100], w: 'Namba',
     d: 'O "Minami" (sul) de Osaka: centro de compras, comida e entretenimento que inclui Dotonbori, Shinsaibashi, Sennichimae e Den Den Town. É barulhento, colorido e muito mais descontraído que Tóquio.',
     aka: ['Minami'],
+    g: 'なんば 大阪',
   },
   'namba-yasaka': {
     n: 'Namba Yasaka Jinja', jp: '難波八阪神社', t: 'santuario', c: 'osaka', ll: [34.66140, 135.49730], w: 'Namba Yasaka Shrine',
@@ -774,25 +811,30 @@ window.PLACES = {
     d: 'Templo budista nas montanhas de Minoh, fundado há ~1.300 anos, conhecido como "templo da vitória". Milhares de daruma vermelhos (bonecos da perseverança) estão espalhados por toda parte: em telhados, escadas, muros e lanternas. Os visitantes compram um daruma e o deixam no templo após realizar um desejo.',
     tip: 'Ônibus Hankyu do ponto 8 de Minoh-Kayano (~25 min, só IC card, a cada ~30 min nos dias úteis). Entrada ~¥500. Fecha ~17h. Confirmar tabela perto da viagem.',
     aka: ['Katsuoji', 'Katsuō-ji'],
+    g: 'Katsuoji Temple',
   },
   'minoh-falls': {
     n: 'Cachoeira de Minoh', jp: '箕面大滝', t: 'natureza', c: 'osaka', ll: [34.85389, 135.47197], w: 'Minoo Falls',
     d: 'Cachoeira de 33 m no Parque Meiji-no-Mori Minoh. A trilha de ~2,8 km a partir da estação Hankyu Minoh segue um riacho na mata, com lojinhas de momiji tempura (folhas de bordo fritas) no caminho.',
     aka: ['Minoh Falls', 'Minoo Falls', 'cachoeira de Minoh'],
+    g: 'Minoo Falls',
   },
   'minoh-park': {
     n: 'Parque Minoh', jp: '箕面公園', t: 'natureza', c: 'osaka', ll: [34.84300, 135.47100], w: 'Meiji no Mori Minō Quasi-National Park',
     d: 'Parque natural nas montanhas ao norte de Osaka, famoso pelos bordos (momiji) e pelos macacos selvagens. Em meados de dezembro as folhas já caíram em sua maioria, mas a caminhada pela mata segue linda.',
     tip: 'Atenção aos macacos: não mostre comida.', aka: ['Minoh Park', 'Minoh', 'Minoo'],
+    g: 'Minoo Park',
   },
   'minoh-sta': {
     n: 'Estação Hankyu Minoh', jp: '箕面駅', t: 'estacao', c: 'osaka', ll: [34.83478, 135.46824], w: 'Minoo Station',
     d: 'Estação final da linha Hankyu Minoh, no início da trilha da cachoeira. Para Umeda: Hankyu Minoh → troca em Ishibashi-handai-mae → Osaka-Umeda (~30 min).',
+    g: '阪急箕面駅',
   },
   'umeda': {
     n: 'Umeda', jp: '梅田', t: 'bairro', c: 'osaka', ll: [34.70250, 135.49590], w: 'Umeda',
     d: 'O "Kita" (norte) de Osaka: centro de arranha-céus, shoppings subterrâneos gigantescos e as estações Osaka/Umeda. Mais moderno e corporativo que Namba.',
     aka: ['Kita', 'Osaka-Umeda', 'Osaka Station'],
+    g: '梅田 大阪',
   },
   'umeda-sta': {
     n: 'Estação Osaka-Umeda', jp: '大阪梅田駅', t: 'estacao', c: 'osaka', ll: [34.70520, 135.49860], w: 'Osaka-umeda Station',
@@ -808,6 +850,7 @@ window.PLACES = {
     cs: 'Daimaru Umeda',
     d: 'O 13º andar da loja de departamento Daimaru Umeda (colada à estação JR Osaka) reúne a Nintendo OSAKA (a maior das lojas oficiais Nintendo), o Pokémon Center Osaka e a Capcom Store. Encaixa perfeito no fim do dia 14.',
     tip: 'Abre ~10h–20h (segue o horário da Daimaru).', aka: ['Nintendo OSAKA', 'Pokémon Center Osaka', 'Daimaru Umeda'],
+    g: 'Nintendo OSAKA',
   },
   'osaka-castle': {
     n: 'Castelo de Osaka', jp: '大阪城', t: 'historico', c: 'osaka', ll: [34.68730, 135.52620], w: 'Osaka Castle',
@@ -826,6 +869,7 @@ window.PLACES = {
   'nippombashi-sta': {
     n: 'Estação Nippombashi', jp: '日本橋駅', t: 'estacao', c: 'osaka', ll: [34.66680, 135.50740], w: 'Nippombashi Station',
     d: 'Estação de metrô ao lado do Mercado Kuromon (linhas Sakaisuji e Sennichimae).',
+    g: '日本橋駅 大阪メトロ',
   },
   'den-den-town': {
     n: 'Den Den Town', jp: 'でんでんタウン', t: 'games', c: 'osaka', ll: [34.65900, 135.50590], w: 'Den Den Town',
@@ -837,26 +881,31 @@ window.PLACES = {
     cs: 'Den Den Town Nipponbashi',
     d: 'Filial de Osaka da famosa loja de retro games, em Den Den Town: cartuchos, consoles antigos e acessórios de Famicom, Super Nintendo, Mega Drive, PlayStation e muito mais.',
     aka: ['Super Potato Osaka'],
+    gmc: true,
   },
   'shinsekai': {
     n: 'Shinsekai', jp: '新世界', t: 'bairro', c: 'osaka', ll: [34.65220, 135.50620], w: 'Shinsekai',
     d: '"Mundo Novo": bairro criado em 1912 inspirado em Paris e Nova York, que parou no tempo. Hoje é a Osaka retrô e popular: letreiros exagerados, baiacus gigantes, arcades antigos, jogos de shogi na rua e dezenas de restaurantes de kushikatsu.',
+    g: 'Shinsekai Osaka',
   },
   'tsutenkaku': {
     n: 'Tsutenkaku', jp: '通天閣', t: 'mirante', c: 'osaka', ll: [34.65254, 135.50632], w: 'Tsūtenkaku',
     d: 'Torre de 103 m no centro de Shinsekai (versão atual de 1956), símbolo de Osaka. No mirante mora Billiken, o "deus das coisas como deveriam ser" — esfregar a sola dos pés dele dá sorte. Tem um escorregador-tubo que desce pelo lado de fora!',
     aka: ['Tsūtenkaku', 'Billiken'],
+    g: 'Tsutenkaku Tower',
   },
   'shinsaibashi': {
     n: 'Shinsaibashi', jp: '心斎橋', t: 'loja', c: 'osaka', ll: [34.67450, 135.50130], w: 'Shinsaibashi',
     d: 'Shinsaibashi-suji é uma galeria comercial coberta de ~600 m que vai de Dotonbori para o norte: drogarias (cosméticos japoneses), Uniqlo, lojas de departamento, tênis e souvenirs. Ideal para as compras finais sem tomar chuva.',
     aka: ['Shinsaibashi-suji'],
+    g: 'Shinsaibashi-suji Shopping Street',
   },
   'daimaru-shinsaibashi': {
     n: 'Pokémon Center Osaka DX (Daimaru Shinsaibashi)', jp: 'ポケモンセンターオーサカDX', t: 'games', c: 'osaka', ll: [34.67296, 135.50077],
     cs: 'Shinsaibashi-suji',
     d: 'Pokémon Center "DX" com o Pokémon Café ao lado, no 9º andar da loja de departamento Daimaru Shinsaibashi, no meio da galeria Shinsaibashi-suji. Perfeito para as compras do último dia.',
     tip: 'Pokémon Café exige reserva online (abre 31 dias antes, esgota rápido).', aka: ['Pokémon Center Osaka DX', 'Daimaru Shinsaibashi'],
+    g: 'ポケモンセンターオーサカDX',
   },
   'kix': {
     n: 'Aeroporto de Kansai (KIX)', jp: '関西国際空港', t: 'aeroporto', c: 'osaka', ll: [34.43200, 135.23040], w: 'Kansai International Airport',

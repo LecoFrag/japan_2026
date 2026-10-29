@@ -294,12 +294,13 @@
         <h1>${esc(day.title)}</h1>
         <p class="sub">${esc(day.sub || '')}</p>
         <div class="day-chips">${cityChip(c)}${day.status ? `<span class="chip">${/confirm/i.test(day.status) ? '✅' : '📝'} ${esc(day.status)}</span>` : ''}</div>
-        ${day.compact ? '' : `<div class="day-facts">
+        ${day.compact ? '' : `<details class="day-more" ${innerWidth > 700 ? 'open' : ''}><summary>Tema, eixo e ritmo do dia</summary><div class="day-facts">
           ${day.theme ? `<div class="fact"><small>Tema</small><span>${esc(day.theme)}</span></div>` : ''}
           ${day.axis ? `<div class="fact"><small>Eixo</small><span>${U.linkify(day.axis)}</span></div>` : ''}
           ${day.pace ? `<div class="fact"><small>Ritmo</small><span>${esc(day.pace)}</span></div>` : ''}
-        </div>`}
-        <p class="day-intro">${U.linkify(day.intro)}</p>
+        </div></details>`}
+        <p class="day-intro clamp" id="dayIntro">${U.linkify(day.intro)}</p>
+        <button type="button" class="more-link" id="introMore" hidden>Ler mais ▾</button>
         ${day.alert ? `<div class="alert"><span class="ic">${KIND_ICON[day.alert.k] || '⚠️'}</span><div><b>${esc(day.alert.t)}</b><p>${U.linkify(day.alert.d)}</p></div></div>` : ''}
         ${sun ? `<div class="sun-row"><span>🌅 Nascer ${sun.rise}</span><span>🌇 Pôr do sol ${sun.set}</span>${clim ? `<span>🌡️ típico ${clim.min}–${clim.max} °C</span>` : ''}<span class="wx" id="wx"></span></div>` : ''}
       </header>`;
@@ -333,6 +334,9 @@
             const p = s.p && PLACES[s.p];
             const seg = segs[idx] || { legs: [] };
             const can = (day.route || []).length > 0;
+            let goId = p && p.t !== 'estacao' ? s.p : null;
+            if (!goId && seg.legs.length) goId = U.realTarget(day, seg.legs[seg.legs.length - 1]);
+            const goP = goId && PLACES[goId];
             return `<li class="tl-item ${s.k || ''} ${seg.legs.length ? 'moves' : 'still'} reveal">
               <div class="tl-icon">${KIND_ICON[s.k] || '•'}</div>
               <div class="tl-card ${can ? 'clickable' : ''}" ${can ? `data-step="${idx}" tabindex="0" role="button" aria-pressed="false"` : ''}>
@@ -341,6 +345,7 @@
                 ${s.d ? `<p>${U.linkify(s.d, { skip: p ? ['p:' + s.p] : [] })}</p>` : ''}
                 ${p ? `<span class="tl-place" data-open="p:${s.p}">${U.photo(s.p) ? `<img src="${esc(U.photo(s.p).url)}" alt="" loading="lazy">` : `<span class="ph">${U.typeOf(p).icon}</span>`}${esc(p.n)} ›</span>` : ''}
                 ${can ? moveSummary(seg) : ''}
+                ${goP ? `<a class="go-btn" href="${U.gmGo(goId)}" target="_blank" rel="noopener" title="Rota no Google Maps de onde vocês estiverem até ${esc(goP.n)}">📍 Ir até lá<small>${esc(goP.n)}</small></a>` : ''}
               </div></li>`;
           }).join('')}
         </ol>
@@ -364,7 +369,7 @@
                 : `${MODE_NAME[l.mode]}${l.line ? ' — ' + esc(l.line) : ''}${l.min ? ' · ~' + U.fmtMin(l.min) : ''}${l.dist ? ' · ' + U.fmtDist(l.dist) : ''}`;
               return `<li class="leg ${l.mode}" data-leg="${l.i}" tabindex="0" role="button" title="Destacar este trecho no mapa"><span class="m">${MODE_ICON[l.mode] || '•'}</span>
                 <div class="ft">${esc(a.n)} → ${esc(b.n)}<small>${detail}</small></div>
-                <a class="gm" href="${U.gmDir(l.from, l.to, l.mode)}" target="_blank" rel="noopener" title="Abrir este trecho no Google Maps">Maps ↗</a></li>`;
+                <a class="gm" href="${U.gmGo(U.realTarget(day, l.i))}" target="_blank" rel="noopener" title="Rota no Google Maps de onde vocês estiverem até ${esc(PLACES[U.realTarget(day, l.i)].n)}">📍 Ir até lá</a></li>`;
             }).join('')}
           </ol>
         </div>
@@ -482,8 +487,37 @@
         });
       }
     }
+    // "ler mais" do texto de abertura (só aparece se o texto foi cortado)
+    const intro = $('#dayIntro'), more = $('#introMore');
+    if (intro && more) {
+      requestAnimationFrame(() => { if (intro.scrollHeight > intro.clientHeight + 4) more.hidden = false; });
+      more.addEventListener('click', () => { intro.classList.toggle('clamp'); more.textContent = intro.classList.contains('clamp') ? 'Ler mais ▾' : 'Mostrar menos ▴'; });
+    }
+    markNow(day);
     if (day.date) loadForecast(day, ref);
     if (day.id === 'fuji') loadFujiForecast();
+  }
+
+  /* -------------------------------------------------- "agora": item da linha do tempo no horário atual do Japão */
+  function parseHour(txt) {
+    const m = [...String(txt).matchAll(/(\d{1,2})h(\d{2})?/g)].map((x) => +x[1] * 60 + (+x[2] || 0));
+    return m.length ? { start: m[0], end: m[1] ?? null } : null;
+  }
+  function markNow(day) {
+    if (!day.date || day.date !== U.japanToday()) return;
+    const jp = new Date(Date.now() + 9 * 3600e3); const now = jp.getUTCHours() * 60 + jp.getUTCMinutes();
+    let cur = -1;
+    (day.schedule || []).forEach((s, i) => { const h = parseHour(s.h); if (h && h.start <= now) cur = i; });
+    if (cur < 0) return;
+    const card = document.querySelector(`[data-step="${cur}"]`) || $$('.tl-card')[cur];
+    if (!card) return;
+    card.classList.add('now');
+    const fab = document.createElement('button');
+    fab.className = 'now-fab'; fab.type = 'button'; fab.innerHTML = '⏱ Agora';
+    fab.addEventListener('click', () => card.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    document.body.appendChild(fab);
+    cleanup.push(() => fab.remove());
+    setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'center' }), 600);
   }
 
   /* -------------------------------------------------- previsão do tempo (Open-Meteo, sem chave) */
@@ -516,7 +550,8 @@
   /* ================================================================ MAPA GERAL */
   function renderAllMap(q) {
     main.dataset.title = 'Mapa';
-    const st = { city: q.city || 'all', kind: 'sights', q: '', near: null };
+    const td = ldDay();
+    const st = { city: q.city || (td && window.CITIES[td.city] ? td.city : 'all'), kind: 'sights', q: '', near: null };
     main.innerHTML = `
       <div class="mapall">
         <aside class="mapall-side">
@@ -571,7 +606,7 @@
     $('#nearBtn').addEventListener('click', () => M.locate(am.map));
     App.onLocate = (ll) => { st.near = ll; update(false); U.toast('Lista ordenada pela distância até você'); };
     cleanup.push(() => { App.onLocate = null; });
-    if (q.city) $$('#cityF .filter').forEach((x) => x.classList.toggle('on', x.dataset.c === q.city));
+    $$('#cityF .filter').forEach((x) => x.classList.toggle('on', x.dataset.c === st.city));
     if (q.focus && PLACES[q.focus]) { st.kind = 'all'; $$('#kindF .filter').forEach((x) => x.classList.toggle('on', x.dataset.k === 'all')); update(false); am.focus(q.focus); }
     else update();
   }
@@ -788,9 +823,22 @@
     if (!('serviceWorker' in navigator) || !navigator.serviceWorker.controller) {
       U.toast('Disponível quando o app estiver publicado (https)'); return;
     }
-    const urls = Object.values(window.GEN.photos).map((p) => p && p.url).filter(Boolean);
+    const photos = Object.values(window.GEN.photos).map((p) => p && p.url).filter(Boolean);
+    const tiles = new Set();
+    const t2 = (lat, lng, z) => [Math.floor(((lng + 180) / 360) * 2 ** z), Math.floor(((1 - Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) / 2) * 2 ** z)];
+    [...DAYS, window.PLAN_B].forEach((d) => {
+      if (!(d.route || []).length) return;
+      M.zones(d).forEach((zn) => {
+        const lats = zn.poly.map((p) => p[0]), lngs = zn.poly.map((p) => p[1]);
+        for (let z = 13; z <= 16; z++) {
+          const [x0, y0] = t2(Math.max(...lats), Math.min(...lngs), z), [x1, y1] = t2(Math.min(...lats), Math.max(...lngs), z);
+          for (let x = x0; x <= x1; x++) for (let y = y0; y <= y1; y++) tiles.add(`https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/${z}/${y}/${x}`);
+        }
+      });
+    });
+    const urls = [...photos, ...tiles];
     navigator.serviceWorker.controller.postMessage({ type: 'precache', urls });
-    U.toast(`Baixando ${urls.length} fotos para uso offline…`);
+    U.toast(`Baixando ${photos.length} fotos e ${tiles.size} pedaços de mapa…`);
   }
 
   /* ================================================================ painel do glossário */
@@ -815,9 +863,11 @@
         ${x.tip ? `<div class="dr-tip"><b>💡 Dica:</b> ${U.linkify(x.tip, { skip: [key] })}</div>` : ''}
         ${days.length ? `<div class="dr-section"><h4>Aparece no roteiro</h4><div class="dr-days">${days.map(dayChip).join('')}</div></div>` : ''}
         ${related.length ? `<div class="dr-section"><h4>Onde ver no roteiro</h4><div class="dr-related">${related.map((r) => `<button class="chip" data-open="p:${r}">${U.typeOf(PLACES[r]).icon} ${esc(PLACES[r].n)}</button>`).join('')}</div></div>` : ''}
-        ${kind === 'p' ? `<div class="dr-section"><h4>Localização</h4><div class="dr-mini-map" id="drMap"></div></div>` : ''}
+        ${kind === 'p' ? `<div class="dr-section"><h4>Localização</h4><div class="dr-mini-map" id="drMap"></div>
+          <div class="gm-name"><span>Nome para buscar no Google Maps:</span><b>${esc(U.gmName(id))}</b><button type="button" class="chip" data-copy="${esc(U.gmName(id))}">Copiar</button>${x.gmc ? '<small>O Google mostra mais de um resultado para esse nome — o botão "Ir até lá" usa o ponto exato do mapa.</small>' : ''}</div></div>` : ''}
         <div class="dr-actions">
-          ${kind === 'p' ? `<a class="btn primary sm" href="${U.gmPlace(id)}" target="_blank" rel="noopener">Abrir no Google Maps ↗</a>
+          ${kind === 'p' ? `<a class="btn primary sm" href="${U.gmGo(id)}" target="_blank" rel="noopener">📍 Ir até lá (de onde estou)</a>
+            <a class="btn sm" href="${U.gmPlace(id)}" target="_blank" rel="noopener">Ver no Google Maps ↗</a>
             <a class="btn sm" href="#/mapa?focus=${id}">Ver no mapa geral</a>` : ''}
           ${x.w ? `<a class="btn sm" href="https://en.wikipedia.org/wiki/${encodeURIComponent(x.w.replace(/ /g, '_'))}" target="_blank" rel="noopener">Wikipedia ↗</a>` : ''}
           ${kind === 'p' && App.dayMap && App.dayMap.markers[id] ? `<button class="btn sm" id="drFocus">Mostrar no mapa do dia</button>` : ''}
@@ -856,6 +906,12 @@
     drawer.addEventListener('touchmove', (e) => { if (y0 == null) return; const dy = e.touches[0].clientY - y0; if (dy > 0) drawer.style.transform = `translateY(${dy}px)`; }, { passive: true });
     drawer.addEventListener('touchend', (e) => { if (y0 == null) return; const dy = e.changedTouches[0].clientY - y0; drawer.style.transform = ''; y0 = null; if (dy > 110) closeDrawer(); });
   })();
+
+  document.addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-copy]'); if (!b) return;
+    try { await navigator.clipboard.writeText(b.dataset.copy); U.toast('Copiado — cole na busca do Google Maps'); }
+    catch { U.toast(b.dataset.copy); }
+  });
 
   // cliques em termos do glossário em qualquer lugar
   document.addEventListener('click', (e) => {

@@ -296,7 +296,8 @@ main { min-height: calc(100vh - var(--top-h)); outline: none; }
 .day-main { min-width: 0; }
 .day-side { position: sticky; top: calc(var(--top-h) + 74px); height: calc(100vh - var(--top-h) - 94px); display: flex; flex-direction: column; gap: 10px; }
 @media (max-width: 1100px) {
-  .day-layout { grid-template-columns: 1fr; gap: 18px; }
+  .day-layout { display: flex; flex-direction: column; gap: 18px; }
+  .day-main > *, .day-side { min-width: 0; max-width: 100%; }
   .day-main { display: contents; }
   .day-main > .day-head { order: 1; }
   .day-main > * { order: 3; }
@@ -339,7 +340,7 @@ main { min-height: calc(100vh - var(--top-h)); outline: none; }
 /* timeline */
 .timeline { list-style: none; margin: 0; padding: 0; position: relative; }
 .timeline::before { content: ''; position: absolute; left: 21px; top: 10px; bottom: 10px; width: 2px; background: linear-gradient(var(--c), color-mix(in srgb, var(--c) 20%, transparent)); border-radius: 2px; }
-.tl-item { position: relative; display: grid; grid-template-columns: 44px 1fr; gap: 12px; padding: 6px 0; }
+.tl-item { position: relative; display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 6px 0; }
 .tl-icon {
   width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font-size: 19px; z-index: 1;
   background: var(--card); border: 2px solid color-mix(in srgb, var(--c) 45%, var(--line)); box-shadow: var(--shadow-sm);
@@ -356,6 +357,14 @@ main { min-height: calc(100vh - var(--top-h)); outline: none; }
 .tl-item.opt .tl-time { color: var(--ai); }
 .tl-card h3 { font-size: 15.5px; font-weight: 700; margin-top: 2px; }
 .tl-card p { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
+.go-btn { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 9px 14px; border-radius: 12px; text-decoration: none; font-weight: 700; font-size: 14px; color: #fff; background: var(--c, var(--shu)); width: max-content; max-width: 100%; box-shadow: 0 4px 12px -6px var(--c, var(--shu)); }
+.go-btn { white-space: nowrap; }
+.go-btn small { font-weight: 500; opacity: .85; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 0 1 auto; }
+.go-btn small::before { content: '· '; }
+.go-btn:active { transform: scale(.98); }
+.gm-name { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-top: 10px; font-size: 13px; color: var(--ink-3); }
+.gm-name b { color: var(--ink); font-size: 15px; }
+.gm-name .chip { cursor: pointer; }
 .tl-tip { font-size: 13px; margin: -4px 0 12px; }
 .tl-card.sel { border-color: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 22%, transparent), var(--shadow); transform: translateX(3px); }
 .tl-item:has(.tl-card.sel) .tl-icon { background: var(--c); border-color: var(--c); transform: scale(1.1); }
@@ -490,7 +499,8 @@ main { min-height: calc(100vh - var(--top-h)); outline: none; }
 .pl-item small { color: var(--ink-3); font-size: 12px; }
 .pl-item .dist { margin-left: auto; font-size: 12px; font-weight: 700; color: var(--ai); white-space: nowrap; }
 @media (max-width: 980px) {
-  .mapall { grid-template-columns: 1fr; grid-template-rows: 55vh auto; height: auto; }
+  .mapall { grid-template-columns: minmax(0, 1fr); grid-template-rows: 55vh auto; height: auto; }
+  .mapall-side { min-width: 0; }
   .mapall-side { border-right: 0; order: 2; }
   .mapall-map { order: 1; height: 55vh; }
   .mapall-list { max-height: none; }
@@ -659,6 +669,87 @@ main { min-height: calc(100vh - var(--top-h)); outline: none; }
 .game-row .gp { border: 0; padding: 0; cursor: pointer; }
 .linklike { border: 0; background: none; padding: 0; cursor: pointer; text-align: left; font: inherit; color: inherit; }
 .linklike:hover b { color: var(--c, var(--shu)); }
+
+/* ------------------------------------------------------------------ detalhes recolhíveis e "agora" */
+.day-more { margin-top: 14px; }
+.day-more summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--ink-3); list-style: none; display: inline-flex; gap: 6px; align-items: center; }
+.day-more summary::-webkit-details-marker { display: none; }
+.day-more summary::after { content: '▾'; transition: transform .2s; }
+.day-more[open] summary::after { transform: rotate(180deg); }
+.day-more .day-facts { margin-top: 10px; }
+.more-link { border: 0; background: none; padding: 4px 0; margin-top: 2px; color: var(--c, var(--shu)); font-weight: 700; font-size: 13.5px; cursor: pointer; }
+.tl-card.now { border-color: var(--shu); box-shadow: 0 0 0 3px color-mix(in srgb, var(--shu) 25%, transparent); }
+.tl-card.now .tl-time::after { content: 'AGORA'; margin-left: 8px; font-size: 10px; font-weight: 800; background: var(--shu); color: #fff; padding: 2px 7px; border-radius: 6px; letter-spacing: .06em; }
+.now-fab { position: fixed; right: 16px; bottom: calc(var(--tab-h) + 16px + env(safe-area-inset-bottom)); z-index: 640; border: 0; border-radius: 999px; padding: 11px 16px; font-weight: 800; background: var(--shu); color: #fff; box-shadow: var(--shadow-lg); cursor: pointer; }
+@media (min-width: 981px) { .now-fab { bottom: 24px; } }
+
+/* ------------------------------------------------------------------ celular: leitura e toque */
+@media (max-width: 700px) {
+  body { font-size: 15px; }
+  .wrap { padding: 0 14px; }
+  .topbar { height: 56px; --top-h: 56px; }
+  :root { --top-h: 56px; }
+  .daystrip { padding: 8px 14px; gap: 6px; }
+  .ds-day { padding: 4px 10px 4px 4px; }
+  .ds-day .num { width: 34px; height: 34px; }
+  .ds-day .lbl { max-width: 120px; }
+  .day-layout { padding-top: 14px; gap: 14px; }
+  .day-head { padding: 18px 16px 16px; }
+  .day-head .date-big b { font-size: 30px; }
+  .day-head .date-big span { font-size: 13.5px; }
+  .day-head h1 { font-size: 23px; margin-top: 6px; }
+  .day-head .sub { font-size: 14px; }
+  .day-chips { margin-top: 10px; }
+  .day-intro { font-size: 15px; margin-top: 12px; }
+  .day-intro.clamp { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .alert { padding: 11px 12px; margin-top: 12px; }
+  .alert p { font-size: 13.5px; }
+  .sun-row { gap: 8px 12px; font-size: 12.5px; }
+  .day-side { top: calc(var(--top-h) + 58px); }
+  .map-tools { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .map-tools::-webkit-scrollbar { display: none; }
+  .zone-chip { flex: none; padding: 7px 12px; }
+  .day-side .day-map { height: 34vh; min-height: 210px; }
+  .block { margin-top: 14px; }
+  .block-title h2 { font-size: 17px; }
+  .timeline::before { left: 17px; }
+  .tl-item { grid-template-columns: 36px minmax(0, 1fr); gap: 9px; }
+  .tl-icon { width: 36px; height: 36px; font-size: 16px; }
+  .tl-card { padding: 11px 12px; }
+  .tl-card h3 { font-size: 15px; }
+  .tl-card p { font-size: 13.5px; }
+  .tl-move .mv-hint { display: none; }
+  .go-btn { width: 100%; justify-content: center; padding: 11px 14px; }
+  .leg { grid-template-columns: 30px 1fr; padding: 10px; }
+  .leg .gm { grid-column: 2; justify-self: start; margin-top: 4px; padding: 7px 12px; }
+  .spots { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .spot-body { padding: 10px; }
+  .spot-body h3 { font-size: 14px; }
+  .spot-body p { display: none; }
+  .callouts { grid-template-columns: 1fr; }
+  .day-nav { flex-direction: column; }
+  .page-hero h1 { font-size: 30px; }
+  .page-hero p { font-size: 15px; }
+  .gloss-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .g-card p { display: none; }
+  .g-card .g-body { padding: 9px 10px 11px; }
+  .g-card b { font-size: 14px; }
+  .filters { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filter { flex: none; }
+  .gloss-tabs { width: 100%; }
+  .gloss-tabs button { flex: 1; padding: 8px 10px; font-size: 13px; }
+  .shop-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 52px; }
+  .cd-box { min-width: 0; flex: 1; padding: 10px 6px 8px; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stat:last-child { grid-column: span 2; }
+  .section { margin: 30px 0; }
+  .overview-map { height: 300px; }
+  .dr-content { padding: 16px 16px 28px; }
+  .dr-content h2 { font-size: 24px; }
+  .dr-actions .btn { flex: 1 1 100%; justify-content: center; padding: 11px 14px; }
+}
 
 footer.foot { padding: 30px 0 40px; color: var(--ink-3); font-size: 12.5px; text-align: center; }
 footer.foot a { color: var(--ink-2); }
