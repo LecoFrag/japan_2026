@@ -633,6 +633,33 @@ main { min-height: calc(100vh - var(--top-h)); outline: none; }
 .game-row .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 @media (max-width: 560px) { .game-row { grid-template-columns: 88px 1fr; } }
 
+/* ------------------------------------------------------------------ opcionais */
+.shop-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.shop-card { padding: 18px; display: flex; flex-direction: column; gap: 10px; transition: transform .25s var(--ease), box-shadow .25s, border-color .25s; }
+.shop-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.shop-card header { display: flex; gap: 6px 12px; align-items: center; flex-wrap: wrap; }
+.shop-card header > div { flex: 1; min-width: 140px; }
+.shop-card header .badge { flex: none; }
+.shop-card h3 { font-size: 18px; font-weight: 800; }
+.shop-card .jp { font-size: 13px; color: var(--ink-3); }
+.shop-ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; font-size: 24px; background: var(--paper-2); flex: none; }
+.shop-card p { font-size: 14px; color: var(--ink-2); }
+.shop-card p b { color: var(--ink); }
+.shop-branches { display: flex; flex-wrap: wrap; gap: 6px; }
+.shop-branches .chip { cursor: pointer; }
+.shop-actions { margin-top: auto; }
+.badge.unique { background: color-mix(in srgb, var(--shu) 14%, var(--card)); color: var(--shu); }
+.badge.mid { background: color-mix(in srgb, var(--ai) 14%, var(--card)); color: var(--ai); }
+.opt-marks { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.opt-marks button { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 5px 11px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--ink-2); transition: all .2s; }
+.opt-marks button:hover { border-color: var(--ink-3); }
+.opt-marks button.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.marked-want { border-color: color-mix(in srgb, var(--gold) 70%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold) 25%, transparent); }
+.marked-done { opacity: .62; }
+.game-row .gp { border: 0; padding: 0; cursor: pointer; }
+.linklike { border: 0; background: none; padding: 0; cursor: pointer; text-align: left; font: inherit; color: inherit; }
+.linklike:hover b { color: var(--c, var(--shu)); }
+
 footer.foot { padding: 30px 0 40px; color: var(--ink-3); font-size: 12.5px; text-align: center; }
 footer.foot a { color: var(--ink-2); }
 

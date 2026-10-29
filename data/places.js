@@ -98,6 +98,18 @@ window.PLACES = {
     d: 'Loja-conceito da Uniqlo inaugurada em 2024 no antigo prédio Bicqlo (lado leste da estação Shinjuku), com ~4.000 m² em 3 andares. Ideal para resolver as roupas de frio: HEATTECH (segunda pele térmica), Ultra Light Down (casacos finos de pluma), luvas e gorros.',
     tip: 'Loja tax-free: com o passaporte, compras acima de ¥5.000 têm o imposto (10%) devolvido no aeroporto, na saída do Japão.', aka: ['Uniqlo'], g: 'UNIQLO 新宿本店',
   },
+  'donki-kabukicho': {
+    n: 'Don Quijote Kabukicho', jp: 'ドン・キホーテ 新宿歌舞伎町店', t: 'loja', c: 'tokyo', ll: [35.69375, 139.70170],
+    cs: 'Don Quijote Shinjuku Kabukicho',
+    d: 'Don Quijote na entrada de Kabukicho, a ~10 min a pé do hotel e aberta 24h. Boa para ir numa noite qualquer, depois do jantar.',
+    g: 'ドン・キホーテ 新宿歌舞伎町店',
+  },
+  'seria-shinjuku': {
+    n: 'Seria Shinjuku (Marui Annex)', jp: 'セリア 新宿マルイアネックス店', t: 'loja', c: 'tokyo', ll: [35.69014, 139.70598], img: false,
+    d: 'Loja da Seria, a rede de ¥100 de design mais delicado, no 4º andar do Shinjuku Marui Annex, perto da estação Shinjuku-sanchome, a ~15 min a pé do hotel.',
+    tip: 'Fica no caminho entre o hotel e a estação Shinjuku-sanchome, usada na manhã de 09/12. Confirmar o horário do prédio.',
+    g: 'セリア 新宿マルイアネックス店',
+  },
   'artnia': {
     n: 'ARTNIA (Square Enix)', jp: 'アルトニア', t: 'games', c: 'tokyo', ll: [35.69611, 139.70902],
     cs: 'Square Enix headquarters Shinjuku Eastside Square',
@@ -253,6 +265,19 @@ window.PLACES = {
     d: 'Loja e café da marca suíça de tênis On, na Cat Street. Entrou no roteiro porque fica no caminho e resolve a compra do tênis sem desvio.',
     aka: ['On Store Tokyo Cat Street', 'On Store'], g: 'On Tokyo Cat Street',
   },
+  'cosme-tokyo': {
+    n: '@cosme TOKYO', jp: 'アットコスメトーキョー', t: 'loja', c: 'tokyo', ll: [35.67016, 139.70313],
+    cs: '@cosme TOKYO Harajuku',
+    d: 'A maior loja de cosméticos de Tóquio, com cerca de 200 marcas japonesas e internacionais em 3 andares, bem em frente à estação Harajuku. Ela é a loja física do @cosme, o maior site de avaliações de beleza do Japão: as prateleiras mostram os rankings dos produtos mais votados, o que facilita muito escolher skincare, protetor solar e maquiagem.',
+    tip: 'Endereço: 1-14-27 Jingumae, Shibuya-ku. Abre ~11h–21h (confirmar). Loja tax-free: levar o passaporte.',
+    aka: ['@cosme', '@cosme TOKYO', 'Cosme Tokyo'], g: '@cosme TOKYO Harajuku',
+  },
+  'donki-shibuya': {
+    n: 'MEGA Don Quijote Shibuya', jp: 'MEGAドン・キホーテ渋谷本店', t: 'loja', c: 'tokyo', ll: [35.66045, 139.69784],
+    cs: 'MEGA Don Quijote Shibuya',
+    d: 'Uma das maiores Don Quijote de Tóquio, com vários andares (inclusive mercado), no meio de Shibuya, pertinho da Center Gai. Abre 24h.',
+    g: 'MEGAドン・キホーテ渋谷本店',
+  },
   'shibuya': {
     n: 'Shibuya', jp: '渋谷', t: 'bairro', c: 'tokyo', ll: [35.65980, 139.70000], w: 'Shibuya',
     d: 'Um dos símbolos da Tóquio contemporânea: telões, neon, multidões, lojas e vida noturna jovem. Cenário de filmes (Encontros e Desencontros), animes e games como Persona 5 e The World Ends with You.',
@@ -403,6 +428,13 @@ window.PLACES = {
     tip: 'Ingresso com data e horário marcados, só online (site oficial teamlabplanets.dmm.com); preço dinâmico, adulto ~¥3.600–4.800 (dias úteis mais baratos). Visita de ~1h30–2h. Use bermuda ou calça que dobre acima do joelho; evite saia (há pisos espelhados). Armários gratuitos na entrada e toalhas disponíveis. Estação Shin-Toyosu (Yurikamome) a 1 min; Toyosu (metrô Yurakucho) a ~10 min a pé.',
     aka: ['teamLab Planets', 'teamLab', 'TeamLab Planets', 'teamLab Planets Tokyo'], g: 'teamLab Planets TOKYO',
   },
+  'daiso-ginza': {
+    n: 'Daiso Ginza (loja principal)', jp: 'ダイソー マロニエゲート銀座店', t: 'loja', c: 'tokyo', ll: [35.67371, 139.76519],
+    cs: 'Marronnier Gate Ginza',
+    d: 'A loja principal mundial da Daiso (a "global flagship"), aberta em 2022 no 6º andar do Marronnier Gate Ginza 2. No mesmo andar estão as marcas irmãs Standard Products (utilidades de design simples, ~¥300) e THREEPPY (decoração e itens fofos). Fica a 2 min da estação Ginza-itchome, de onde sai o metrô para o teamLab.',
+    tip: 'Endereço: 3-2-1 Ginza, Marronnier Gate Ginza 2, 6º andar. O prédio abre ~11h–21h.',
+    aka: ['Daiso de Ginza', 'Marronnier Gate'], g: 'DAISO マロニエゲート銀座',
+  },
   'ginza-sta': {
     n: 'Estação Ginza', jp: '銀座駅', t: 'estacao', c: 'tokyo', ll: [35.67170, 139.76390], w: 'Ginza Station',
     d: 'Estação de metrô no centro de Ginza. Para voltar ao hotel: linha Marunouchi direto até Shinjuku-sanchome (~17 min).',
@@ -469,6 +501,12 @@ window.PLACES = {
     n: 'Estação Kyoto', jp: '京都駅', t: 'estacao', c: 'kyoto', ll: [34.98580, 135.75880], w: 'Kyoto Station',
     d: 'Estação central de Kyoto, onde chega o Shinkansen. Prédio futurista (1997) com escadaria gigante e terraço. Para o hotel: metrô Karasuma (2 paradas até Shijo, ~4 min) ou táxi (~10 min).',
   },
+  'aeon-mall-kyoto': {
+    n: 'AEON Mall Kyoto', jp: 'イオンモールKYOTO', t: 'loja', c: 'kyoto', ll: [34.98272, 135.75460],
+    cs: 'AEON Mall Kyoto',
+    d: 'Shopping a ~5 min a pé da saída sul (Hachijo) da Kyoto Station, com um supermercado grande do grupo AEON no térreo (KOHYO, ~9h–22h), praça de alimentação, Daiso e lojas de roupa. Ótimo para jantar e fazer mercado na volta do Nintendo Museum (Dia 11), que já passa pela Kyoto Station.',
+    aka: ['AEON Mall', 'Aeon Mall Kyoto'], g: 'イオンモールKYOTO',
+  },
   'hotel-kyoto': {
     n: 'Hotel Resol Kyoto Shijo Muromachi', jp: 'ホテルリソル京都 四条室町', t: 'hotel', c: 'kyoto', ll: [35.00067, 135.75795],
     d: 'Nossa base em Kyoto (10 a 13/12). Fica na rua Muromachi, logo ao sul da Shijo-dori, a ~3 min da estação Shijo (metrô Karasuma) / Karasuma (trem Hankyu). Localização central: Nishiki a 10 min e Gion a ~25 min a pé.',
@@ -496,6 +534,11 @@ window.PLACES = {
     cs: 'Takashimaya Kyoto store',
     d: 'Loja oficial da Nintendo na cidade natal da empresa, no 7º andar do Kyoto Takashimaya S.C. (prédio T8), com uma cabeça gigante do Mario na entrada do térreo. A Nintendo foi fundada em Kyoto em 1889 como fabricante de baralhos hanafuda!',
     tip: 'Fica a ~10 min a pé do hotel; aberta até ~20h. Ótimo para uma noite em Kyoto.', aka: ['Nintendo KYOTO', 'Takashimaya'],
+  },
+  'seria-kawaramachi': {
+    n: 'Seria Kawaramachi (OPA)', jp: 'セリア 河原町オーパ店', t: 'loja', c: 'kyoto', ll: [35.00450, 135.76960], img: false,
+    d: 'Seria no 7º andar do Kawaramachi OPA, a 1 min da estação Kyoto-Kawaramachi, entre o Mercado Nishiki e Pontocho. Abre ~11h–21h. Posição no mapa aproximada.',
+    g: 'セリア 河原町オーパ店',
   },
   'pontocho': {
     n: 'Pontocho', jp: '先斗町', t: 'rua', c: 'kyoto', ll: [35.00560, 135.77090], w: 'Pontochō',
@@ -704,6 +747,12 @@ window.PLACES = {
     cs: 'Glico Man',
     d: 'O "Glico Man", atleta de braços erguidos cruzando a linha de chegada, iluminado desde 1935 pela fabricante de doces Glico (a do Pocky). A foto imitando a pose na ponte Ebisubashi é obrigatória.',
     aka: ['Glico', 'Glico Man', 'Ebisubashi'],
+  },
+  'donki-dotonbori': {
+    n: 'Don Quijote Dotonbori', jp: 'ドン・キホーテ 道頓堀店', t: 'loja', c: 'osaka', ll: [34.66890, 135.50250],
+    cs: 'Don Quijote Dotonbori Ebisu Tower',
+    d: 'A Don Quijote "da roda-gigante" (Ebisu Tower), no canal de Dotonbori. Abre até de madrugada e fica a ~10 min do hotel. Posição no mapa aproximada.',
+    g: 'ドン・キホーテ 道頓堀店',
   },
   'hozenji': {
     n: 'Hozen-ji', jp: '法善寺', t: 'templo', c: 'osaka', ll: [34.66780, 135.50250], w: 'Hōzen-ji',

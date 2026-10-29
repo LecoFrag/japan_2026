@@ -78,10 +78,11 @@
     else if (page === 'mapa') renderAllMap(q);
     else if (page === 'glossario') renderGlossary(q);
     else if (page === 'games') renderGames();
+    else if (page === 'opcionais') renderOptionals();
     else if (page === 'fuji') { nav = 'fuji'; renderDay('fuji'); }
     else if (page === 'dicas') renderTips();
     else renderHome();
-    if (['games', 'fuji', 'dicas'].includes(nav) && innerWidth <= 980) $('#moreBtn').classList.add('active');
+    if (['games', 'fuji', 'dicas', 'opcionais'].includes(nav) && innerWidth <= 980) $('#moreBtn').classList.add('active');
     setNav(nav);
     if (!q.keep) window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
     observeReveal();
@@ -628,6 +629,96 @@
     $('#gf').addEventListener('click', (e) => { const b = e.target.closest('[data-f]'); if (!b) return; st.f = b.dataset.f; filtersHtml(); grid(); });
     $('#gc').addEventListener('click', (e) => { const b = e.target.closest('[data-city]'); if (!b) return; st.city = b.dataset.city; filtersHtml(); grid(); });
     $('#gq').addEventListener('input', (e) => { st.q = e.target.value; grid(); });
+  }
+
+  /* ================================================================ OPCIONAIS */
+  function renderOptionals() {
+    main.dataset.title = 'Opcionais';
+    const SHOPS = window.SHOPS || [];
+    const marks = U.store.get('optMarks', {}); // id -> 'want' | 'done'
+    // outros opcionais: tudo que algum dia marca como opcional
+    const optIds = [];
+    const addOpt = (id) => { if (id && PLACES[id] && !optIds.includes(id)) optIds.push(id); };
+    [...DAYS, window.PLAN_B].forEach((d) => {
+      (d.spots || []).forEach((s) => { if (s.s === 'opt') addOpt(s.p); });
+      (d.schedule || []).forEach((s) => { if (s.k === 'opt') addOpt(s.p); });
+    });
+    const branchIds = SHOPS.flatMap((s) => s.branches);
+    const markBtns = (key) => `<div class="opt-marks" data-key="${key}">
+        <button type="button" data-mark="want" class="${marks[key] === 'want' ? 'on' : ''}">⭐ Queremos ir</button>
+        <button type="button" data-mark="done" class="${marks[key] === 'done' ? 'on' : ''}">✅ Já fomos</button></div>`;
+    const commonCls = { unique: 'unique', common: 'ok', rare: 'todo', mid: 'mid' };
+    main.innerHTML = `<div class="wrap">
+      <section class="page-hero"><div class="eyebrow">Opcionais · おまけ</div><h1>Lojas e extras</h1>
+        <p>Lugares que queremos visitar, mas sem dia fixo. As <b>lojas de rede</b> existem em vários pontos — aqui está o que cada uma vende e onde vocês já vão passar perto de uma. Embaixo, os <b>outros opcionais</b> que aparecem espalhados pelo roteiro. Marquem ⭐ o que querem fazer e ✅ o que já fizeram (fica salvo neste aparelho).</p></section>
+
+      <section class="section"><div class="section-head"><div><div class="eyebrow">Compras</div><h2 class="h2">Lojas de rede</h2></div>
+        <p class="lead" style="max-width:420px">No Japão, "perto de mim" funciona muito bem: o botão do Google Maps de cada loja mostra a unidade mais próxima de onde vocês estiverem.</p></div>
+        <div class="grid shop-grid">
+          ${SHOPS.map((s) => `
+            <article class="card shop-card reveal ${marks['shop:' + s.id] ? 'marked-' + marks['shop:' + s.id] : ''}">
+              <header><span class="shop-ic">${s.icon}</span><div><h3>${esc(s.n)}</h3><span class="jp">${esc(s.jp)}</span></div>
+                <span class="badge ${commonCls[s.commonK] || 'log'}">${esc(s.common)}</span></header>
+              <p>${U.linkify(s.what)}</p>
+              <p class="shop-buy"><b>O que comprar:</b> ${esc(s.buy)}</p>
+              <p class="shop-where"><b>📍 No caminho:</b> ${U.linkify(s.where)}</p>
+              ${s.branches.length ? `<div class="shop-branches">${s.branches.map((b) => {
+                const p = PLACES[b]; const days = U.placeDays(b);
+                return `<button type="button" class="chip" data-open="p:${b}">${esc(p.n)}</button>${days.map(dayChip).join('')}`;
+              }).join('')}</div>` : ''}
+              <div class="shop-actions">
+                <a class="btn sm" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.q)}" target="_blank" rel="noopener">🗺️ Mais próxima no Google Maps ↗</a>
+              </div>
+              ${markBtns('shop:' + s.id)}
+            </article>`).join('')}
+        </div></section>
+
+      <section class="section"><div class="section-head"><div><div class="eyebrow">Mapa</div><h2 class="h2">Lojas e opcionais no mapa</h2></div>
+        <div class="filters" id="optCity"><button class="filter on" data-c="all">Todos</button>${['tokyo', 'kyoto', 'osaka'].map((k) => `<button class="filter city-f" data-c="${k}" style="--c:${window.CITIES[k].color}">${esc(window.CITIES[k].n)}</button>`).join('')}</div></div>
+        <div class="overview-map reveal" id="optMap"></div></section>
+
+      <section class="section"><div class="section-head"><div><div class="eyebrow">Extras</div><h2 class="h2">Outros opcionais do roteiro</h2></div>
+        <p class="lead" style="max-width:420px">Tudo o que está marcado como "opcional" em algum dia. Cada um mostra o dia em que já fica no caminho.</p></div>
+        ${['tokyo', 'kyoto', 'osaka', 'fuji'].map((c) => {
+          const ids = optIds.filter((id) => PLACES[id].c === c);
+          if (!ids.length) return '';
+          return `<section class="games-city" style="${U.cssCity(c)}"><h2>${esc(window.CITIES[c].n)} <span class="jp">${window.CITIES[c].jp}</span></h2>
+            <div class="grid" style="margin-top:12px">${ids.map((id) => { const p = PLACES[id]; return `
+              <div class="card game-row reveal ${marks['p:' + id] ? 'marked-' + marks['p:' + id] : ''}">
+                <button type="button" class="gp" data-open="p:${id}" aria-label="${esc(p.n)}">${U.img(id)}</button>
+                <div><button type="button" class="linklike" data-open="p:${id}"><b>${esc(p.n)}</b></button>
+                  <p>${esc(p.d)}</p>
+                  <div class="meta">${typeChip(p)}${U.placeDays(id).map(dayChip).join('')}</div>
+                  ${markBtns('p:' + id)}</div></div>`; }).join('')}</div></section>`;
+        }).join('')}
+      </section>
+      ${footer()}</div>`;
+
+    // marcações
+    const onMark = (e) => {
+      const b = e.target.closest('[data-mark]'); if (!b) return;
+      const box = b.closest('[data-key]'); const key = box.dataset.key;
+      marks[key] = marks[key] === b.dataset.mark ? undefined : b.dataset.mark;
+      if (!marks[key]) delete marks[key];
+      U.store.set('optMarks', marks);
+      $$('[data-mark]', box).forEach((x) => x.classList.toggle('on', x.dataset.mark === marks[key]));
+      const card = box.closest('.shop-card, .game-row');
+      if (card) { card.classList.remove('marked-want', 'marked-done'); if (marks[key]) card.classList.add('marked-' + marks[key]); }
+    };
+    main.addEventListener('click', onMark);
+    cleanup.push(() => main.removeEventListener('click', onMark));
+
+    // mapa com filiais + opcionais
+    const am = M.allMap($('#optMap'));
+    cleanup.push(() => am.map.remove());
+    const all = [...new Set([...branchIds, ...optIds])].filter((id) => PLACES[id]);
+    const show = (c) => { const ids = all.filter((id) => c === 'all' || PLACES[id].c === c); am.render(ids); am.fit(ids); };
+    show('tokyo');
+    $$('#optCity .filter').forEach((x) => x.classList.toggle('on', x.dataset.c === 'tokyo'));
+    $('#optCity').addEventListener('click', (e) => {
+      const b = e.target.closest('[data-c]'); if (!b) return;
+      $$('#optCity .filter').forEach((x) => x.classList.toggle('on', x === b)); show(b.dataset.c);
+    });
   }
 
   /* ================================================================ GAMES */

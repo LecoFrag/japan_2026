@@ -4,7 +4,7 @@
 
 window.TODO = [
   { id: 'aeroporto', t: 'Anotar números dos voos e o terminal de chegada em Narita (T1 ou T2)', day: 'tk0' },
-  { id: 'teamlab', t: 'Comprar o ingresso do teamLab Planets — 09/12, horário de ~16h30 (site oficial)', day: 'tk4' },
+  { id: 'teamlab', t: 'Comprar o ingresso do teamLab Planets — 09/12, horário de ~17h30 (site oficial)', day: 'tk4' },
   { id: 'rikimaru', t: 'Reservar o Yakiniku Rikimaru Ikebukuro — 07/12, ~19h30, 2 pessoas', day: 'tk2' },
   { id: 'vjw', t: 'Preencher o Visit Japan Web (imigração + alfândega) antes do embarque' },
   { id: 'shibuya-sky', t: 'Reservar o Shibuya Sky — horário de ~15h45 em 08/12 (pôr do sol)', day: 'tk3' },
@@ -106,3 +106,47 @@ window.INFO = {
     { t: 'Previsão do tempo (Tóquio)', u: 'https://www.google.com/search?q=previs%C3%A3o+do+tempo+T%C3%B3quio' },
   ],
 };
+
+/* =========================================================================
+   OPCIONAIS — lojas de rede que queremos visitar em algum momento
+   branches: filiais que ficam no caminho do roteiro (ids de places.js)
+   q: busca no Google Maps ("perto de mim" no celular)
+   ========================================================================= */
+window.SHOPS = [
+  { id: 'cosme', n: '@cosme TOKYO', jp: 'アットコスメ', icon: '💄', common: 'Loja única', commonK: 'unique',
+    what: 'A maior loja de cosméticos de Tóquio, organizada pelos rankings do maior site de avaliações de beleza do Japão.',
+    buy: 'Skincare japonês e coreano, protetores solares, maquiagem, kits exclusivos.',
+    branches: ['cosme-tokyo'], where: 'Já está no roteiro: Dia 3, em frente à estação Harajuku.', q: '@cosme TOKYO' },
+  { id: 'daiso', n: 'Daiso', jp: 'ダイソー', icon: '🧺', common: 'Muito comum', commonK: 'common',
+    what: 'A maior rede de lojas de ¥100 (a maioria dos itens sai por ¥110 com imposto; há linhas de ¥300 a ¥1.000).',
+    buy: 'Utensílios de cozinha, potes de bentô, papelaria, itens de viagem e organização, lembrancinhas baratas.',
+    branches: ['daiso-ginza'], where: 'A loja principal mundial fica em Ginza (Dia 4), a 2 min do metrô para o teamLab. Há Daisos em quase todo bairro e shopping.', q: 'Daiso' },
+  { id: 'seria', n: 'Seria', jp: 'セリア', icon: '🎀', common: 'Menos comum no centro', commonK: 'rare',
+    what: 'Concorrente da Daiso, também de ¥100, com produtos de design mais delicado e "fofo".',
+    buy: 'Organização da casa, papelaria, artigos de festa e decoração, utensílios de cozinha bonitos.',
+    branches: ['seria-shinjuku', 'seria-kawaramachi'], where: 'Tóquio: Shinjuku Marui Annex, perto do hotel. Kyoto: Kawaramachi OPA, no caminho do Dia 10 (entre o Nishiki e Pontocho).', q: 'Seria 100円ショップ' },
+  { id: 'matsukiyo', n: 'Matsumoto Kiyoshi', jp: 'マツモトキヨシ', icon: '💊', common: 'Em todo lugar', commonK: 'common',
+    what: 'A drogaria mais famosa do Japão ("MatsuKiyo"): remédios, cosméticos, skincare e higiene.',
+    buy: 'Protetor solar (Biore, Anessa), máscaras faciais, colírios, remédios sem receita, cosméticos.',
+    branches: [], where: 'Há várias em Shinjuku, Ginza, Harajuku, Shibuya e na galeria Shinsaibashi-suji (Osaka, Dia 16). Vale comparar preços com a Sundrug.', q: 'マツモトキヨシ' },
+  { id: 'sundrug', n: 'Sundrug', jp: 'サンドラッグ', icon: '💊', common: 'Em todo lugar', commonK: 'common',
+    what: 'Outra grande rede de drogarias, muitas vezes com preços um pouco menores que a MatsuKiyo.',
+    buy: 'Os mesmos itens de drogaria; compare antes de comprar em quantidade.',
+    branches: [], where: 'Muito comum perto de estações em Tóquio, Kyoto e Osaka.', q: 'サンドラッグ' },
+  { id: 'donki', n: 'Don Quijote', jp: 'ドン・キホーテ', icon: '🐧', common: 'Em todo lugar', commonK: 'common',
+    what: 'Loja de descontos caótica e abarrotada ("Donki"), aberta até tarde ou 24h.',
+    buy: 'Doces e KitKats de sabores, cosméticos, eletrônicos baratos, souvenirs, fantasias.',
+    branches: ['donki-kabukicho', 'donki-shibuya', 'donki-dotonbori'], where: 'Kabukicho (perto do hotel, qualquer noite), MEGA Shibuya (Dia 3) e Dotonbori (13 e 16/12).', q: 'Don Quijote' },
+  { id: 'machioka', n: 'Okashi no Machioka', jp: 'おかしのまちおか', icon: '🍬', common: 'Comum em Tóquio; raro em Kyoto/Osaka', commonK: 'mid',
+    what: 'Rede de doces e salgadinhos com desconto, com ~200 lojas concentradas na região de Tóquio.',
+    buy: 'KitKat e Pocky de sabores, balas e chicletes japoneses, dagashi (docinhos baratos) para levar de presente.',
+    branches: [], where: 'Melhor comprar ainda em Tóquio. Há loja na região da estação Ikebukuro (Dia 2, antes do jantar) — confirmar no site oficial.', q: 'おかしのまちおか' },
+  { id: 'aeon', n: 'AEON', jp: 'イオン', icon: '🛒', common: 'Comum (em formatos diferentes)', commonK: 'mid',
+    what: 'O maior grupo de supermercados e shoppings do Japão.',
+    buy: 'Comidas, doces, chás, temperos e snacks a preço de supermercado — bem mais barato que lojas de souvenir.',
+    branches: ['aeon-mall-kyoto'], where: 'O AEON Mall Kyoto fica a 5 min da Kyoto Station: encaixa na volta do Nintendo Museum (Dia 11). No centro de Tóquio o grupo aparece mais em minimercados de bairro.', q: 'AEON イオン' },
+  { id: 'gyomu', n: 'Gyomu Super', jp: '業務スーパー', icon: '📦', common: 'Comum, mas fora das áreas turísticas', commonK: 'mid',
+    what: 'Supermercado "atacadista" para o público local: congelados, importados e embalagens grandes.',
+    buy: 'Curiosidade e preço: temperos, molhos, snacks e chás em embalagens grandes.',
+    branches: [], where: 'Em Osaka há uma em Nipponbashi (~9h–21h), perto de Den Den Town (Dia 15). Só se der tempo.', q: '業務スーパー' },
+];
