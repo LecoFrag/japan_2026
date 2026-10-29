@@ -106,6 +106,11 @@ window.PLACES = {
     d: 'Don Quijote na entrada de Kabukicho, a ~10 min a pé do hotel e aberta 24h. Boa para ir numa noite qualquer, depois do jantar.',
     g: 'ドン・キホーテ 新宿歌舞伎町店',
   },
+  'gu-shinjuku': {
+    n: 'GU Shinjuku Flags', jp: 'ジーユー 新宿フラッグス店', t: 'loja', c: 'tokyo', ll: [35.68992, 139.70152], img: false,
+    d: 'Loja da GU (marca irmã e mais barata da Uniqlo) no 7º e 8º andares do prédio Shinjuku Flags, colado à saída sudeste da estação Shinjuku. Perto da Uniqlo Shinjuku Main Store: dá para ver as duas na manhã de compras de frio.',
+    g: 'ジーユー 新宿フラッグス店',
+  },
   'seria-shinjuku': {
     n: 'Seria Shinjuku (Marui Annex)', jp: 'セリア 新宿マルイアネックス店', t: 'loja', c: 'tokyo', ll: [35.69014, 139.70598], img: false,
     d: 'Loja da Seria, a rede de ¥100 de design mais delicado, no 4º andar do Shinjuku Marui Annex, perto da estação Shinjuku-sanchome, a ~15 min a pé do hotel.',
@@ -448,6 +453,12 @@ window.PLACES = {
     d: 'A loja principal mundial da Daiso (a "global flagship"), aberta em 2022 no 6º andar do Marronnier Gate Ginza 2. No mesmo andar estão as marcas irmãs Standard Products (utilidades de design simples, ~¥300) e THREEPPY (decoração e itens fofos). Fica a 2 min da estação Ginza-itchome, de onde sai o metrô para o teamLab.',
     tip: 'Endereço: 3-2-1 Ginza, Marronnier Gate Ginza 2, 6º andar. O prédio abre ~11h–21h.',
     aka: ['Daiso de Ginza', 'Marronnier Gate'], g: 'DAISO マロニエゲート銀座',
+  },
+  'gu-ginza': {
+    n: 'GU Ginza (a maior do Japão)', jp: 'ジーユー銀座店', t: 'loja', c: 'tokyo', ll: [35.67088, 139.76426], img: false,
+    d: 'A maior loja da GU no Japão, com 5 andares, na 5-7-7 Ginza, perto da saída A2 da estação Ginza. Há também uma GU menor no 5º andar do Marronnier Gate Ginza 2, o mesmo prédio da Daiso.',
+    tip: 'Normalmente abre ~11h–21h (confirmar). Fica no meio da tarde de compras do Dia 4.',
+    g: 'GU Ginza flagship store',
   },
   'ginza-sta': {
     n: 'Estação Ginza', jp: '銀座駅', t: 'estacao', c: 'tokyo', ll: [35.67170, 139.76390], w: 'Ginza Station',
@@ -899,6 +910,16 @@ window.PLACES = {
     d: 'Shinsaibashi-suji é uma galeria comercial coberta de ~600 m que vai de Dotonbori para o norte: drogarias (cosméticos japoneses), Uniqlo, lojas de departamento, tênis e souvenirs. Ideal para as compras finais sem tomar chuva.',
     aka: ['Shinsaibashi-suji'],
     g: 'Shinsaibashi-suji Shopping Street',
+  },
+  'gu-shinsaibashi': {
+    n: 'GU Shinsaibashi', jp: 'ジーユー心斎橋店', t: 'loja', c: 'osaka', ll: [34.67125, 135.50161], img: false,
+    d: 'Loja grande da GU dentro da galeria coberta Shinsaibashi-suji, a poucos minutos de Dotonbori e do hotel. Encaixa nas compras finais do último dia.',
+    g: 'ジーユー心斎橋店',
+  },
+  'gu-umeda': {
+    n: 'GU LINKS UMEDA', jp: 'ジーユー LINKS UMEDA店', t: 'loja', c: 'osaka', ll: [34.70445, 135.49619], img: false,
+    d: 'Loja grande da GU no shopping LINKS UMEDA, ligado às estações de Umeda. Fica no caminho do fim de tarde em Umeda (Dia 14).',
+    g: 'ジーユー LINKS UMEDA店',
   },
   'daimaru-shinsaibashi': {
     n: 'Pokémon Center Osaka DX (Daimaru Shinsaibashi)', jp: 'ポケモンセンターオーサカDX', t: 'games', c: 'osaka', ll: [34.67296, 135.50077],

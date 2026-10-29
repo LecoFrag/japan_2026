@@ -1,5 +1,5 @@
 /* Service worker: deixa o roteiro disponível offline depois da primeira visita */
-const VERSION = 'jp26-v2';
+const VERSION = 'jp26-v3';
 const SHELL = [
   './', 'index.html', 'css/app.css', 'js/util.js', 'js/map.js', 'js/app.js',
   'data/places.js', 'data/terms.js', 'data/trip.js', 'data/info.js', 'data/generated.js',
