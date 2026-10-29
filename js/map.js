@@ -3,6 +3,10 @@
    ========================================================================= */
 (function () {
   const M = {};
+  // Proteção: animações do Leaflet que terminam depois de o mapa ser descartado (ao trocar de página)
+  // tentavam ler a posição de um painel que já não existe.
+  const getPos = L.DomUtil.getPosition;
+  L.DomUtil.getPosition = (el) => (el ? getPos(el) : new L.Point(0, 0));
   function baseLayers() {
     return {
       'Mapa': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Tiles &copy; Esri', className: 'tiles-base', crossOrigin: 'anonymous' }),
@@ -23,7 +27,7 @@
     // mantém o mapa do tamanho certo quando o layout muda (painel fixo, celular, tela cheia)
     if ('ResizeObserver' in window) {
       let pending;
-      const ro = new ResizeObserver(() => { cancelAnimationFrame(pending); pending = requestAnimationFrame(() => map._loaded && map.invalidateSize()); });
+      const ro = new ResizeObserver(() => { cancelAnimationFrame(pending); pending = requestAnimationFrame(() => map._loaded && !map._destroyed && map.invalidateSize()); });
       ro.observe(el);
       map.on('unload', () => ro.disconnect());
     }
@@ -54,6 +58,7 @@
   /** Descarta um mapa com segurança (para animações de zoom em andamento antes de remover). */
   M.destroy = (map) => {
     if (!map) return;
+    map._destroyed = true;
     try { map.stop(); map.off(); map.remove(); } catch (e) { /* mapa já removido */ }
   };
   M.retheme = () => { /* o modo escuro dos mapas é feito via CSS (.tiles-base) */ };

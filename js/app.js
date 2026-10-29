@@ -293,7 +293,7 @@
     const header = `
       <header class="card day-head" style="${U.cssCity(c)}">
         <div class="date-big">${day.date ? `<b>${U.dayNum(day.date)}/12</b><span>${U.fmtLong(day.date)}</span>` : `<b>🗻</b><span>Plano B — sem data definida</span>`}</div>
-        <h1>${esc(day.title)}</h1>
+        <h1>${U.linkify(day.title)}</h1>
         <p class="sub">${esc(day.sub || '')}</p>
         <div class="day-chips">${cityChip(c)}${day.status ? `<span class="chip">${/confirm/i.test(day.status) ? '✅' : '📝'} ${esc(day.status)}</span>` : ''}</div>
         ${day.compact ? '' : `<details class="day-more" ${innerWidth > 700 ? 'open' : ''}><summary>Tema, eixo e ritmo do dia</summary><div class="day-facts">
@@ -343,8 +343,8 @@
               <div class="tl-icon">${KIND_ICON[s.k] || '•'}</div>
               <div class="tl-card ${can ? 'clickable' : ''}" ${can ? `data-step="${idx}" tabindex="0" role="button" aria-pressed="false"` : ''}>
                 <div class="tl-time">${esc(s.h)}</div>
-                <h3>${esc(s.t)}</h3>
-                ${s.d ? `<p>${U.linkify(s.d, { skip: p ? ['p:' + s.p] : [] })}</p>` : ''}
+                <h3>${U.linkify(s.t)}</h3>
+                ${s.d ? `<p>${U.linkify(s.d)}</p>` : ''}
                 ${p ? `<span class="tl-place" data-open="p:${s.p}">${U.photo(s.p) ? `<img src="${esc(U.photo(s.p).url)}" alt="" loading="lazy">` : `<span class="ph">${U.typeOf(p).icon}</span>`}${esc(p.n)} ›</span>` : ''}
                 ${can ? moveSummary(seg) : ''}
                 ${goP ? `<a class="go-btn" href="${U.gmGo(goId)}" target="_blank" rel="noopener" title="Rota no Google Maps de onde vocês estiverem até ${esc(goP.n)}">📍 Ir até lá<small>${esc(goP.n)}</small></a>` : ''}
@@ -903,7 +903,7 @@
       <div class="dr-photo" style="${kind === 'p' ? U.cssCity(x.c) : ''}">${U.img(photoId)}
         ${ph ? `<a class="dr-credit" href="${esc(ph.page)}" target="_blank" rel="noopener">📷 ${esc(ph.artist || 'Wikimedia Commons')}${ph.license ? ' · ' + esc(ph.license) : ''}</a>` : ''}</div>
       <div class="dr-content" style="${kind === 'p' ? U.cssCity(x.c) : ''}">
-        <div class="dr-type">${kind === 'p' ? typeChip(x) + cityChip(x.c) : `<span class="chip">${window.TERM_CATS[x.cat].icon} ${esc(window.TERM_CATS[x.cat].label)}</span>`}</div>
+        <div class="dr-type">${kind === 'p' ? '<span class="chip kind-chip">📍 Lugar do roteiro</span>' + typeChip(x) + cityChip(x.c) : `<span class="chip kind-chip">📖 Termo / conceito</span><span class="chip">${window.TERM_CATS[x.cat].icon} ${esc(window.TERM_CATS[x.cat].label)}</span>`}</div>
         <h2 id="drawerTitle">${esc(x.n)}</h2>${x.jp ? `<div class="jp-big">${esc(x.jp)}</div>` : ''}
         <p class="dr-desc">${U.linkify(x.d, { skip: [key] })}</p>
         ${x.tip ? `<div class="dr-tip"><b>💡 Dica:</b> ${U.linkify(x.tip, { skip: [key] })}</div>` : ''}

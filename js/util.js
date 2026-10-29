@@ -136,10 +136,17 @@
   /* -------------------------------------------------- glossário clicável no texto */
   let aliasRe = null; const aliasMap = new Map();
   function buildAliases() {
-    const add = (name, key) => { if (name && name.length > 1 && !aliasMap.has(name)) aliasMap.set(name, key); };
-    // nomes completos têm prioridade sobre apelidos
+    const put = (name, key) => { if (name && name.length > 1 && !aliasMap.has(name)) aliasMap.set(name, key); };
+    // aceita o termo com inicial maiúscula ou minúscula ("Torii" e "torii")
+    const add = (name, key) => {
+      if (!name || name.startsWith('-')) return;
+      put(name, key);
+      const f = name[0];
+      if (f.toLowerCase() !== f.toUpperCase()) { put(f.toLowerCase() + name.slice(1), key); put(f.toUpperCase() + name.slice(1), key); }
+    };
+    // nomes completos têm prioridade sobre apelidos; termos genéricos (nolink) não viram link
     for (const [id, p] of Object.entries(window.PLACES)) if (p.t !== 'estacao' || id === 'busta-shinjuku') add(p.n, 'p:' + id);
-    for (const [id, t] of Object.entries(window.TERMS)) add(t.n, 't:' + id);
+    for (const [id, t] of Object.entries(window.TERMS)) if (!t.nolink) add(t.n, 't:' + id);
     for (const [id, p] of Object.entries(window.PLACES)) (p.aka || []).forEach((a) => add(a, 'p:' + id));
     for (const [id, t] of Object.entries(window.TERMS)) (t.aka || []).forEach((a) => add(a, 't:' + id));
     const names = [...aliasMap.keys()].sort((a, b) => b.length - a.length).map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));

@@ -811,6 +811,9 @@ body.map-full-on .tabbar, body.map-full-on .now-fab, body.map-full-on .map-tab {
   .modal { width: 100%; border-radius: 20px 20px 0 0; max-height: 86vh; padding-bottom: calc(18px + env(safe-area-inset-bottom)); }
 }
 
+.kind-chip { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.day-head h1 .gl, .tl-card h3 .gl { text-decoration-thickness: 1px; }
+
 footer.foot { padding: 30px 0 40px; color: var(--ink-3); font-size: 12.5px; text-align: center; }
 footer.foot a { color: var(--ink-2); }
 

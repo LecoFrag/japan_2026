@@ -83,7 +83,7 @@ window.PLACES = {
     n: 'Cabeça do Godzilla', jp: 'ゴジラヘッド', t: 'monumento', c: 'tokyo', ll: [35.69516, 139.70193],
     w: 'Shinjuku Toho Building',
     d: 'Réplica gigante da cabeça do Godzilla no terraço do prédio Shinjuku Toho (Hotel Gracery), em Kabukicho. Um dos símbolos pop de Shinjuku — dá para ver da rua, a 5 minutos do hotel.',
-    aka: ['Godzilla'],
+    aka: ['Godzilla', 'Toho'],
   },
   'golden-gai': {
     n: 'Golden Gai', jp: 'ゴールデン街', t: 'noite', c: 'tokyo', ll: [35.69393, 139.70446], w: 'Golden Gai',
@@ -98,7 +98,7 @@ window.PLACES = {
     n: 'Uniqlo Shinjuku Main Store', jp: 'ユニクロ 新宿本店', t: 'loja', c: 'tokyo', ll: [35.69160, 139.70250],
     cs: 'Uniqlo store Tokyo',
     d: 'Loja-conceito da Uniqlo inaugurada em 2024 no antigo prédio Bicqlo (lado leste da estação Shinjuku), com ~4.000 m² em 3 andares. Ideal para resolver as roupas de frio: HEATTECH (segunda pele térmica), Ultra Light Down (casacos finos de pluma), luvas e gorros.',
-    tip: 'Loja tax-free: com o passaporte, compras acima de ¥5.000 têm o imposto (10%) devolvido no aeroporto, na saída do Japão.', aka: ['Uniqlo'], g: 'UNIQLO 新宿本店',
+    tip: 'Loja tax-free: com o passaporte, compras acima de ¥5.000 têm o imposto (10%) devolvido no aeroporto, na saída do Japão.',  g: 'UNIQLO 新宿本店',
   },
   'donki-kabukicho': {
     n: 'Don Quijote Kabukicho', jp: 'ドン・キホーテ 新宿歌舞伎町店', t: 'loja', c: 'tokyo', ll: [35.69375, 139.70170],
@@ -210,18 +210,18 @@ window.PLACES = {
   'ueno-park': {
     n: 'Parque Ueno', jp: '上野恩賜公園', t: 'parque', c: 'tokyo', ll: [35.71480, 139.77340], w: 'Ueno Park',
     d: 'Grande parque público (1873) que abriga museus, zoológico, templos e o lago Shinobazu. No nosso roteiro é uma travessia tranquila a pé entre Kappabashi e Ameyoko.',
-    aka: ['Ueno Park', 'Ueno'],
+    aka: ['Ueno Park'],
   },
   'shinobazu': {
     n: 'Lago Shinobazu', jp: '不忍池', t: 'parque', c: 'tokyo', ll: [35.71180, 139.77020], w: 'Shinobazu Pond',
     d: 'Lago no sul do Parque Ueno com um templo numa ilhota (Bentendo). No verão fica coberto de lótus; em dezembro é um passeio calmo com patos e vista dos prédios.',
-    aka: ['Shinobazu'],
+    aka: ['Shinobazu', 'Bentendo'],
     g: '不忍池弁天堂',
   },
   'ameyoko': {
     n: 'Ameyoko', jp: 'アメ横', t: 'mercado', c: 'tokyo', ll: [35.71030, 139.77450], w: 'Ameya-Yokochō',
     d: 'Mercado de rua de ~400 m sob e ao lado dos trilhos do trem, entre Ueno e Okachimachi. Nasceu como mercado negro no pós-guerra; hoje tem frutas, peixes, doces, roupas, tênis e barracas de comida com clima barulhento e popular.',
-    aka: ['Ameya-Yokocho', 'Ameyoko-cho'],
+    aka: ['Ameya-Yokocho', 'Ameyoko-cho', 'Okachimachi'],
   },
   'ueno-sta': {
     n: 'Estação Ueno', jp: '上野駅', t: 'estacao', c: 'tokyo', ll: [35.71380, 139.77730], w: 'Ueno Station',
@@ -237,6 +237,34 @@ window.PLACES = {
     aka: ['Skytree'],
   },
 
+  'ueno': {
+    n: 'Ueno', jp: '上野', t: 'bairro', c: 'tokyo', ll: [35.71280, 139.77450], w: 'Ueno',
+    d: 'Bairro popular no nordeste de Tóquio, em volta da grande estação Ueno: o Parque Ueno (com museus, zoológico e o lago Shinobazu) de um lado e o mercado de rua Ameyoko do outro. Ponto final da caminhada do Dia 2.',
+  },
+  'sumida-river': {
+    n: 'Rio Sumida', jp: '隅田川', t: 'natureza', c: 'tokyo', ll: [35.71060, 139.80010], w: 'Sumida River',
+    d: 'O rio que corta o leste de Tóquio e separa Asakusa da Tokyo Skytree. Suas margens têm passeios a pé e barcos turísticos; foi a principal via de transporte da antiga Edo.',
+    aka: ['Sumida', 'rio Sumida'],
+  },
+  'nihonbashi': {
+    n: 'Nihonbashi', jp: '日本橋', t: 'bairro', c: 'tokyo', ll: [35.68400, 139.77450], w: 'Nihonbashi',
+    d: '"Ponte do Japão": bairro comercial tradicional a leste da Tokyo Station, onde fica a ponte que era o ponto zero de todas as estradas do Japão no período Edo. Hoje tem lojas de departamento históricas (Mitsukoshi, Takashimaya) e a Pokémon Center Tokyo DX.',
+  },
+  'icho-namiki': {
+    n: 'Avenida dos Ginkgos (Jingu Gaien Icho Namiki)', jp: '神宮外苑いちょう並木', t: 'natureza', c: 'tokyo', ll: [35.67430, 139.71840], w: 'Meiji Jingu Gaien',
+    d: 'Avenida de ~300 m com 146 árvores ginkgo que ficam douradas entre o fim de novembro e o início de dezembro. Fica a ~15 min a pé de Omotesando — um desvio opcional no Dia 3 se ainda estiver no auge.',
+    aka: ['Gaien Icho Namiki', 'Jingu Gaien Icho Namiki', 'Avenida dos Ginkgos'],
+  },
+  'tsukiji': {
+    n: 'Tsukiji Outer Market', jp: '築地場外市場', t: 'mercado', c: 'tokyo', ll: [35.66540, 139.77070], w: 'Tsukiji fish market',
+    d: 'O mercado externo do antigo mercado de peixes de Tóquio, com centenas de bancas de frutos do mar, tamagoyaki e facas. Ficou fora do roteiro (abre cedo e muitas bancas fecham às quartas e domingos).',
+    aka: ['Tsukiji', 'Tsukiji Outer Market'],
+  },
+  'odaiba': {
+    n: 'Odaiba', jp: 'お台場', t: 'bairro', c: 'tokyo', ll: [35.62700, 139.77650], w: 'Odaiba',
+    d: 'Ilha artificial na baía de Tóquio, com shoppings, a réplica da Estátua da Liberdade, o Gundam gigante e vistas da Rainbow Bridge. Ficou fora do roteiro.',
+    aka: ['Odaiba'],
+  },
   /* ---- Dia 3: Meiji / Harajuku / Omotesando / Shibuya ---- */
   'meiji-jingumae-sta': {
     n: 'Estação Meiji-jingumae (Harajuku)', jp: '明治神宮前〈原宿〉駅', t: 'estacao', c: 'tokyo', ll: [35.66880, 139.70450],
@@ -257,11 +285,12 @@ window.PLACES = {
     n: 'Harajuku', jp: '原宿', t: 'bairro', c: 'tokyo', ll: [35.67100, 139.70500], w: 'Harajuku',
     d: 'Bairro símbolo da moda jovem e das subculturas japonesas (kawaii, lolita, streetwear). Mistura lojas excêntricas, crepes, brechós e vielas criativas.',
     g: '原宿 渋谷区',
+    aka: ['Jingumae'] 
   },
   'takeshita': {
     n: 'Takeshita Street', jp: '竹下通り', t: 'rua', c: 'tokyo', ll: [35.67150, 139.70480], w: 'Takeshita Street',
     d: 'Rua estreita de pedestres (~350 m) em frente à estação Harajuku: crepes recheados, algodão-doce colorido gigante, lojas kawaii, acessórios e moda adolescente. Lota muito, especialmente à tarde.',
-    aka: ['Takeshita-dori'],
+    aka: ['Takeshita-dori', 'Takeshita'],
   },
   'omotesando': {
     n: 'Omotesando', jp: '表参道', t: 'rua', c: 'tokyo', ll: [35.66670, 139.70950], w: 'Omotesandō',
@@ -304,7 +333,7 @@ window.PLACES = {
     n: 'Estátua de Hachiko', jp: 'ハチ公像', t: 'monumento', c: 'tokyo', ll: [35.65905, 139.70058],
     cs: 'Hachikō statue Shibuya',
     d: 'Estátua do cão Akita Hachiko, que esperou o dono (um professor que morreu em 1925) na estação Shibuya todos os dias por quase 10 anos. Virou símbolo de lealdade — e o ponto de encontro mais famoso de Tóquio. A história inspirou o filme "Sempre ao Seu Lado".',
-    aka: ['Hachiko', 'Hachikō'],
+    aka: ['Hachiko', 'Hachikō', 'Akita'],
   },
   'shibuya-crossing': {
     n: 'Shibuya Crossing', jp: '渋谷スクランブル交差点', t: 'monumento', c: 'tokyo', ll: [35.65950, 139.70050], w: 'Shibuya Crossing',
@@ -363,6 +392,7 @@ window.PLACES = {
   'otemachi-sta': {
     n: 'Estação Otemachi', jp: '大手町駅', t: 'estacao', c: 'tokyo', ll: [35.68470, 139.76630], w: 'Ōtemachi Station',
     d: 'Estação de metrô ao lado do portão Ote-mon. Da região do hotel: linha Marunouchi a partir de Shinjuku-sanchome (~15 min, direto).',
+    aka: ['Otemachi'] 
   },
   'shinjuku-sanchome-sta': {
     n: 'Estação Shinjuku-sanchome', jp: '新宿三丁目駅', t: 'estacao', c: 'tokyo', ll: [35.69050, 139.70600], w: 'Shinjuku-sanchōme Station',
@@ -385,7 +415,7 @@ window.PLACES = {
   'tokyo-sta': {
     n: 'Tokyo Station', jp: '東京駅', t: 'historico', c: 'tokyo', ll: [35.68120, 139.76710], w: 'Tokyo Station',
     d: 'Estação central de Tóquio (1914), com fachada de tijolos vermelhos de 335 m restaurada em 2012 — lembra a Estação Central de Amsterdã. Dentro: as cúpulas do lado Marunouchi, a Ramen Street e a Tokyo Character Street. É também de onde saem os Shinkansen.',
-    aka: ['Estação de Tóquio', 'Estação Tóquio'],
+    aka: ['Estação de Tóquio', 'Estação Tóquio', 'Yaesu', 'Gyoko-dori'],
     g: '東京駅丸の内駅舎',
   },
   'character-street': {
@@ -439,6 +469,7 @@ window.PLACES = {
   'toyosu-sta': {
     n: 'Estação Toyosu', jp: '豊洲駅', t: 'estacao', c: 'tokyo', ll: [35.65490, 139.79610], w: 'Toyosu Station',
     d: 'Estação das linhas Yurakucho (metrô) e Yurikamome. Do metrô até o teamLab Planets são ~10 min a pé — ou 2 paradas de Yurikamome até Shin-Toyosu. A linha Yurakucho também vai direto até Ikebukuro.',
+    aka: ['Toyosu', 'Shin-Toyosu'] 
   },
   'teamlab-planets': {
     n: 'teamLab Planets TOKYO', jp: 'チームラボプラネッツ TOKYO DMM', t: 'museu', c: 'tokyo', ll: [35.64938, 139.78973],
@@ -500,7 +531,7 @@ window.PLACES = {
   'kawaguchiko': {
     n: 'Lago Kawaguchi', jp: '河口湖', t: 'natureza', c: 'fuji', ll: [35.51700, 138.75500], w: 'Lake Kawaguchi',
     d: 'O mais acessível dos Cinco Lagos do Fuji, com vistas clássicas da montanha refletida na água. A margem norte (Oishi Park) tem o melhor ângulo.',
-    aka: ['Kawaguchiko', 'Kawaguchi'],
+    aka: ['Kawaguchiko', 'Kawaguchi', 'Fujikawaguchiko'],
     g: 'Lake Kawaguchi',
   },
   'chureito': {
@@ -512,6 +543,7 @@ window.PLACES = {
   'shimoyoshida-sta': {
     n: 'Estação Shimoyoshida', jp: '下吉田駅', t: 'estacao', c: 'fuji', ll: [35.49773, 138.80353], w: 'Shimoyoshida Station',
     d: 'Estação da ferrovia Fujikyu mais próxima do Pagode Chureito (~10 min a pé até a escadaria).',
+    aka: ['Shimoyoshida'] 
   },
   'oishi-park': {
     n: 'Oishi Park', jp: '大石公園', t: 'parque', c: 'fuji', ll: [35.52329, 138.74654],
@@ -529,6 +561,7 @@ window.PLACES = {
   'kyoto-sta': {
     n: 'Estação Kyoto', jp: '京都駅', t: 'estacao', c: 'kyoto', ll: [34.98580, 135.75880], w: 'Kyoto Station',
     d: 'Estação central de Kyoto, onde chega o Shinkansen. Prédio futurista (1997) com escadaria gigante e terraço. Para o hotel: metrô Karasuma (2 paradas até Shijo, ~4 min) ou táxi (~10 min).',
+    aka: ['Hachijo'] 
   },
   'aeon-mall-kyoto': {
     n: 'AEON Mall Kyoto', jp: 'イオンモールKYOTO', t: 'loja', c: 'kyoto', ll: [34.98272, 135.75460],
@@ -551,20 +584,20 @@ window.PLACES = {
   'nishiki': {
     n: 'Mercado Nishiki', jp: '錦市場', t: 'mercado', c: 'kyoto', ll: [35.00505, 135.76480], w: 'Nishiki Market',
     d: '"A cozinha de Kyoto": rua coberta e estreita de ~400 m com mais de 100 bancas há 400 anos. Picles (tsukemono), tofu e yuba, doces de matcha, polvinho caramelizado com ovo de codorna, facas Aritsugu e muito petisco para provar.',
-    tip: 'Funciona ~10h–17h/18h; muitas bancas fecham cedo. Não é permitido comer andando.', aka: ['Nishiki Market', 'Nishiki'],
+    tip: 'Funciona ~10h–17h/18h; muitas bancas fecham cedo. Não é permitido comer andando.', aka: ['Nishiki Market', 'Nishiki', 'Aritsugu'],
   },
   'kawaramachi': {
     n: 'Shijo-Kawaramachi', jp: '四条河原町', t: 'bairro', c: 'kyoto', ll: [35.00380, 135.76890],
     cs: 'Shijo Kawaramachi Kyoto',
     d: 'Principal cruzamento comercial de Kyoto: lojas de departamento (Takashimaya, Daimaru), galerias cobertas (Teramachi e Shinkyogoku) e restaurantes. Fica entre o hotel e o rio Kamo.',
-    aka: ['Kawaramachi', 'Shijo/Kawaramachi', 'Shijo-dori', 'Teramachi'],
+    aka: ['Kawaramachi', 'Shijo/Kawaramachi', 'Shijo-dori', 'Teramachi', 'Shinkyogoku'],
     g: '京都髙島屋',
   },
   'nintendo-kyoto': {
     n: 'Nintendo KYOTO (Takashimaya)', jp: 'Nintendo KYOTO', t: 'games', c: 'kyoto', ll: [35.00307, 135.76843],
     cs: 'Takashimaya Kyoto store',
     d: 'Loja oficial da Nintendo na cidade natal da empresa, no 7º andar do Kyoto Takashimaya S.C. (prédio T8), com uma cabeça gigante do Mario na entrada do térreo. A Nintendo foi fundada em Kyoto em 1889 como fabricante de baralhos hanafuda!',
-    tip: 'Fica a ~10 min a pé do hotel; aberta até ~20h. Ótimo para uma noite em Kyoto.', aka: ['Nintendo KYOTO', 'Takashimaya'],
+    tip: 'Fica a ~10 min a pé do hotel; aberta até ~20h. Ótimo para uma noite em Kyoto.', aka: ['Nintendo KYOTO'],
   },
   'seria-kawaramachi': {
     n: 'Seria Kawaramachi (OPA)', jp: 'セリア 河原町オーパ店', t: 'loja', c: 'kyoto', ll: [35.00450, 135.76960], img: false,
@@ -616,7 +649,7 @@ window.PLACES = {
     n: 'Fushimi Inari Taisha', jp: '伏見稲荷大社', t: 'santuario', c: 'kyoto', ll: [34.96714, 135.77267], w: 'Fushimi Inari-taisha',
     d: 'Santuário principal das ~30 mil filiais dedicadas a Inari, kami do arroz, da prosperidade e dos negócios. Famoso pelos ~10 mil torii vermelhos doados por empresas e pessoas, formando túneis que sobem o monte Inari. As raposas (kitsune) são as mensageiras de Inari.',
     tip: 'Aberto 24h e gratuito. Chegar antes das 8h faz toda a diferença. A subida completa leva 2–3h; o trecho principal leva ~45 min.',
-    aka: ['Fushimi Inari', 'Fushimi Inari-taisha'],
+    aka: ['Fushimi Inari', 'Fushimi Inari-taisha', 'Fushimi', 'Yotsutsuji'],
   },
   'senbon-torii': {
     n: 'Senbon Torii', jp: '千本鳥居', t: 'santuario', c: 'kyoto', ll: [34.96620, 135.77480],
@@ -636,12 +669,12 @@ window.PLACES = {
     n: 'Byodo-in Omotesando (rua do chá)', jp: '平等院表参道', t: 'rua', c: 'kyoto', ll: [34.89030, 135.80640],
     cs: 'Uji tea shop street',
     d: 'Rua de acesso ao Byodo-in repleta de casas de chá centenárias: matcha, sorvete de matcha, dango, soba de chá verde e doces. O lugar certo para o almoço e o matcha do dia.',
-    aka: ['rua do chá', 'Omotesando de Uji'],
+    aka: ['rua do chá', 'Omotesando de Uji', 'Nakamura Tokichi'],
   },
   'byodoin': {
     n: 'Byodo-in', jp: '平等院', t: 'templo', c: 'kyoto', ll: [34.88936, 135.80770], w: 'Byōdō-in',
     d: 'Templo budista de 1053, Patrimônio Mundial. Seu Salão da Fênix (Hoo-do), refletido no lago, é tão emblemático que está estampado na moeda de ¥10 — tenha uma no bolso para comparar! O museu Hoshokan guarda as fênix originais do telhado.',
-    tip: 'Abre 8h30–17h30. Entrada ~¥700 (+ ~¥300 para o interior do salão, com horário marcado).', aka: ['Byōdō-in', 'Byodoin', 'Phoenix Hall', 'Salão da Fênix'],
+    tip: 'Abre 8h30–17h30. Entrada ~¥700 (+ ~¥300 para o interior do salão, com horário marcado).', aka: ['Byōdō-in', 'Byodoin', 'Phoenix Hall', 'Salão da Fênix', 'Hoo-do', 'Hoshokan'],
   },
   'uji-bridge': {
     n: 'Ponte Uji e rio Uji', jp: '宇治橋', t: 'natureza', c: 'kyoto', ll: [34.89300, 135.80580], w: 'Uji Bridge',
@@ -653,6 +686,7 @@ window.PLACES = {
     n: 'Estação JR Ogura', jp: 'JR小倉駅', t: 'estacao', c: 'kyoto', ll: [34.88915, 135.78629],
     cs: 'JR Ogura Station Uji',
     d: 'Estação JR (linha Nara), uma parada depois de Uji (~3 min). O Nintendo Museum fica a ~8 min a pé da saída norte.',
+    aka: ['Ogura', 'JR Ogura'] 
   },
   'nintendo-museum': {
     n: 'Nintendo Museum', jp: 'ニンテンドーミュージアム', t: 'museu', c: 'kyoto', ll: [34.89257, 135.78420], w: 'Nintendo Museum',
@@ -668,7 +702,7 @@ window.PLACES = {
   'kiyomizu': {
     n: 'Kiyomizu-dera', jp: '清水寺', t: 'templo', c: 'kyoto', ll: [34.99485, 135.78504], w: 'Kiyomizu-dera',
     d: 'Templo budista fundado em 778, Patrimônio Mundial e um dos maiores ícones de Kyoto. Seu grande terraço de madeira, sustentado por 139 pilares sem nenhum prego, fica 13 m acima da encosta, com vista da cidade. Abaixo fica a fonte Otowa, cujas três águas trazem sorte.',
-    tip: 'Abre às 6h. Chegando ~7h30 você pega o templo quase vazio. Entrada ~¥500.', aka: ['Kiyomizu', 'Kiyomizudera'],
+    tip: 'Abre às 6h. Chegando ~7h30 você pega o templo quase vazio. Entrada ~¥500.', aka: ['Kiyomizu', 'Kiyomizudera', 'Otowa', 'Fonte Otowa'],
   },
   'sannenzaka': {
     n: 'Sannenzaka', jp: '三年坂', t: 'rua', c: 'kyoto', ll: [34.99640, 135.78150], w: 'Sannenzaka',
@@ -709,7 +743,7 @@ window.PLACES = {
   'shijo-omiya-sta': {
     n: 'Estação Shijo-Omiya (Randen)', jp: '四条大宮駅', t: 'estacao', c: 'kyoto', ll: [35.00325, 135.74849], w: 'Shijō-Ōmiya Station',
     d: 'Ponto inicial do Randen (bonde Keifuku), o charmoso bondinho de uma linha só que vai até o centro de Arashiyama. A ~15 min a pé do hotel (ou 1 parada de Hankyu desde Karasuma).',
-    aka: ['Shijo-Omiya'],
+    aka: ['Shijo-Omiya', 'Omiya'],
   },
   'randen-arashiyama-sta': {
     n: 'Estação Arashiyama (Randen)', jp: '嵐山駅〈嵐電〉', t: 'estacao', c: 'kyoto', ll: [35.01522, 135.67770], w: 'Arashiyama Station (Keifuku)',
@@ -736,16 +770,21 @@ window.PLACES = {
   'okochi': {
     n: 'Okochi Sanso', jp: '大河内山荘', t: 'parque', c: 'kyoto', ll: [35.01663, 135.66959], w: 'Ōkōchi Sansō',
     d: 'Vila e jardim do ator de filmes de samurai Denjiro Okochi, construída ao longo de 30 anos no topo do bambuzal. A entrada (~¥1.000) inclui chá matcha e doce; tem vistas de Kyoto e das montanhas.',
-    tip: 'Normalmente abre às 9h.', aka: ['Okochi Sanso Villa', 'Ōkōchi Sansō'],
+    tip: 'Normalmente abre às 9h.', aka: ['Okochi Sanso Villa', 'Ōkōchi Sansō', 'Denjiro Okochi'],
   },
   'togetsukyo': {
     n: 'Ponte Togetsukyo', jp: '渡月橋', t: 'monumento', c: 'kyoto', ll: [35.01290, 135.67780], w: 'Togetsukyō',
     d: '"Ponte que a lua atravessa": ponte de madeira de 155 m sobre o rio Katsura, símbolo de Arashiyama, com as montanhas ao fundo. O nome vem de um imperador que viu a lua parecer cruzá-la.',
-    aka: ['Togetsukyo Bridge', 'Togetsu-kyo'],
+    aka: ['Togetsukyo Bridge', 'Togetsu-kyo', 'Togetsukyo'],
   },
   'hankyu-arashiyama-sta': {
     n: 'Estação Hankyu Arashiyama', jp: '阪急嵐山駅', t: 'estacao', c: 'kyoto', ll: [35.00950, 135.68120], w: 'Arashiyama Station (Hankyu)',
     d: 'Estação do trem Hankyu, do outro lado da ponte Togetsukyo. Volta para Karasuma (perto do hotel) com uma troca em Katsura (~25 min).',
+  },
+  'katsura-river': {
+    n: 'Rio Katsura (Hozu)', jp: '桂川・保津川', t: 'natureza', c: 'kyoto', ll: [35.01250, 135.67800], w: 'Katsura River',
+    d: 'O rio que passa por Arashiyama, sob a ponte Togetsukyo. Mais acima, entre as montanhas, chama-se Hozu (há passeios de barco por suas corredeiras); ao chegar à cidade vira Katsura. A estação Katsura, do trem Hankyu, é onde se faz a baldeação entre Arashiyama e o centro.',
+    aka: ['Katsura', 'rio Katsura', 'Hozu', 'rio Hozu'],
   },
   'kinkakuji': {
     n: 'Kinkaku-ji (Pavilhão Dourado)', jp: '金閣寺', t: 'templo', c: 'kyoto', ll: [35.03940, 135.72920], w: 'Kinkaku-ji',
@@ -816,6 +855,7 @@ window.PLACES = {
     n: 'Estação Minoh-Kayano', jp: '箕面萱野駅', t: 'estacao', c: 'osaka', ll: [34.83239, 135.48902],
     img: false,
     d: 'Nova estação final (2024) da linha Midosuji/Kita-Osaka Kyuko — dá para vir direto de Namba sem baldeação (~40 min). Do ponto de ônibus nº 8 sai o ônibus Hankyu para o Katsuo-ji.',
+    aka: ['Minoh-Kayano'] 
   },
   'katsuoji': {
     n: 'Katsuo-ji', jp: '勝尾寺', t: 'templo', c: 'osaka', ll: [34.86562, 135.49226], w: 'Katsuō-ji',
@@ -854,7 +894,7 @@ window.PLACES = {
   'umeda-sky': {
     n: 'Umeda Sky Building', jp: '梅田スカイビル', t: 'mirante', c: 'osaka', ll: [34.70530, 135.49050], w: 'Umeda Sky Building',
     d: 'Duas torres de 40 andares unidas no topo por um anel — o "Floating Garden Observatory", com terraço a céu aberto e vista 360° de Osaka. Lindo ao pôr do sol e à noite. Opção de mirante para o dia 14.',
-    tip: 'Aberto até ~22h30. Entrada ~¥2.000.', aka: ['Floating Garden', 'Umeda Sky', 'mirante em Umeda'],
+    tip: 'Aberto até ~22h30. Entrada ~¥2.000.', aka: ['Floating Garden', 'Umeda Sky', 'mirante em Umeda', 'Takimi Koji'],
   },
   'daimaru-umeda': {
     n: 'Nintendo OSAKA & Pokémon Center Osaka (Daimaru Umeda)', jp: '大丸梅田店 13F', t: 'games', c: 'osaka', ll: [34.70191, 135.49645],
@@ -881,11 +921,12 @@ window.PLACES = {
     n: 'Estação Nippombashi', jp: '日本橋駅', t: 'estacao', c: 'osaka', ll: [34.66680, 135.50740], w: 'Nippombashi Station',
     d: 'Estação de metrô ao lado do Mercado Kuromon (linhas Sakaisuji e Sennichimae).',
     g: '日本橋駅 大阪メトロ',
+    aka: ['Nippombashi'],
   },
   'den-den-town': {
     n: 'Den Den Town', jp: 'でんでんタウン', t: 'games', c: 'osaka', ll: [34.65900, 135.50590], w: 'Den Den Town',
     d: 'A "Akihabara de Osaka", ao longo da rua Sakaisuji em Nipponbashi: lojas de eletrônicos, retro games, figures, model kits, cards, anime e cosplay. Mais compacta e tranquila que Akihabara.',
-    aka: ['Nipponbashi', 'Den-Den Town'],
+    aka: ['Nipponbashi', 'Den-Den Town', 'Sakaisuji'],
   },
   'super-potato-osaka': {
     n: 'Super Potato Osaka', jp: 'スーパーポテト 大阪日本橋店', t: 'games', c: 'osaka', ll: [34.66189, 135.50507],
@@ -931,6 +972,6 @@ window.PLACES = {
   'kix': {
     n: 'Aeroporto de Kansai (KIX)', jp: '関西国際空港', t: 'aeroporto', c: 'osaka', ll: [34.43200, 135.23040], w: 'Kansai International Airport',
     d: 'Aeroporto internacional de Osaka, numa ilha artificial na baía. Da Nankai Namba: expresso Rapi:t (~38 min, assento reservado) ou Airport Express (~45 min). Para voo internacional, chegar ~3h antes.',
-    aka: ['KIX', 'Kansai'],
+    aka: ['KIX', 'aeroporto de Kansai'],
   },
 };
