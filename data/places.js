@@ -640,6 +640,12 @@ window.PLACES = {
     aka: ['Yasaka Shrine', 'Yasaka-jinja', 'Yasaka'],
     g: 'Yasaka Shrine Kyoto',
   },
+  'tozando': {
+    n: 'Tozando Gion-Yasaka', jp: '東山堂 祇園八坂店', t: 'loja', c: 'kyoto', ll: [35.00323, 135.77692], img: false,
+    d: 'Loja de espadas japonesas da Tozando, tradicional casa de Kyoto de equipamentos de artes marciais, bem em frente ao portão oeste do Santuário Yasaka. Vende katanas verdadeiras, iaito (espadas de treino sem fio), réplicas decorativas e armaduras de samurai. A equipe fala inglês, e a loja também oferece uma experiência de corte com espada (tameshigiri), com reserva.',
+    tip: 'Endereço: 542 Gionmachi Minamigawa, Higashiyama. Abre ~10h–21h30, todos os dias (só fecha no Obon e no Ano-Novo). Tax-free: levar o passaporte. Espada, iaito ou réplica só na mala despachada, nunca na de mão; pedir embalagem para viagem. Katana verdadeira (nihontō) precisa de certificado de registro e licença de exportação: perguntar na loja sobre os papéis ou o envio.',
+    aka: ['Tozando', 'Tozando Gion-Yasaka Store'], g: 'Tozando Gion-Yasaka Store',
+  },
   'inari-sta': {
     n: 'Estação JR Inari', jp: '稲荷駅', t: 'estacao', c: 'kyoto', ll: [34.96720, 135.77000], w: 'Inari Station',
     d: 'Estação JR (linha Nara) bem em frente ao grande torii do Fushimi Inari. A linha Nara também segue direto até Uji — por isso o dia 11 flui sem voltar ao centro.',
