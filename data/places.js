@@ -462,6 +462,13 @@ window.PLACES = {
     d: 'Maior shopping de luxo de Ginza (2017), com obras de arte gigantes no átrio, livraria Tsutaya com livros de arte e um terraço-jardim gratuito no topo com vista do bairro.',
     aka: ['Ginza Six'],
   },
+  'refa-ginza': {
+    n: 'ReFa GINZA (loja principal)', jp: 'リファ ギンザ', t: 'loja', c: 'tokyo', ll: [35.66880, 139.76270], img: false,
+    cs: 'ReFa GINZA',
+    d: 'A maior loja da ReFa, marca japonesa de beleza com tecnologia (secadores, chapinhas e modeladores de cabelo, chuveiros com filtro, rolinhos faciais, cosméticos). São 5 andares no prédio Ginza gCUBE, na Chuo-dori, com a linha completa para testar à vontade. Fica um quarteirão ao sul do GINZA SIX.',
+    tip: 'Endereço: 7-9-15 Ginza, Ginza gCUBE (subsolo ao 4º andar). Dias úteis 11h–20h; fins de semana e feriados 10h–20h (horários da inauguração, em 2025 — confirmar em ginza.refa.net). Não precisa reservar. Tax-free com passaporte. Atenção à voltagem: os aparelhos de cabelo vendidos no Japão costumam ser de 100 V — perguntar na loja pelos modelos bivolt/de viagem antes de comprar.',
+    aka: ['ReFa', 'ReFa Ginza', 'Refa', 'gCUBE'], g: 'ReFa GINZA',
+  },
   'ginza-itchome-sta': {
     n: 'Estação Ginza-itchome', jp: '銀座一丁目駅', t: 'estacao', c: 'tokyo', ll: [35.67400, 139.76730], w: 'Ginza-itchōme Station',
     d: 'Estação da linha Yurakucho (dourada) no norte de Ginza. Vai direto até Toyosu em ~7 min — é a ponte entre Ginza e o teamLab Planets.',
