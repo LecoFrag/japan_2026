@@ -117,11 +117,18 @@ window.PLACES = {
     tip: 'Fica no caminho entre o hotel e a estação Shinjuku-sanchome, usada na manhã de 09/12. Confirmar o horário do prédio.',
     g: 'セリア 新宿マルイアネックス店',
   },
+  'sqex-shinjuku': {
+    n: 'SQUARE ENIX Cafe & Shop Shinjuku', jp: 'スクウェア・エニックス カフェ＆ショップ 新宿', t: 'games', c: 'tokyo', ll: [35.68905, 139.70185],
+    img: false,
+    d: 'Café e loja oficial da Square Enix, inaugurados em junho de 2026 nos três primeiros andares da PASELABO TOWER, em frente à saída sudeste (東南口) da estação Shinjuku. A loja do térreo é aberta a todos, com produtos de Final Fantasy, Dragon Quest, Kingdom Hearts, NieR e outras séries; o café, com menu temático, fica nos andares de cima.',
+    tip: 'Aberto todos os dias, 11h–22h. A loja não precisa de reserva. O café é quase só com reserva (abre todo dia ao meio-dia do Japão para a data de um mês depois) e cobra ¥1.200 de entrada. Endereço: 3-36-1 Shinjuku.',
+    aka: ['SQUARE ENIX Cafe & Shop', 'Square Enix Cafe & Shop'], g: 'SQUARE ENIX Cafe & Shop SHINJUKU',
+  },
   'artnia': {
     n: 'ARTNIA (Square Enix)', jp: 'アルトニア', t: 'games', c: 'tokyo', ll: [35.69611, 139.70902],
     cs: 'Square Enix headquarters Shinjuku Eastside Square',
     d: 'Café e loja oficial da Square Enix, no térreo da sede da empresa em Shinjuku. Produtos de Final Fantasy, Dragon Quest e Kingdom Hearts, drinks temáticos e um enorme cristal decorativo. Fica a ~10 min a pé do hotel.',
-    tip: 'Ótimo programa para uma noite qualquer em Shinjuku. Confirmar horário perto da viagem.', aka: ['ARTNIA', 'Artnia', 'Square Enix'], g: 'ARTNIA Square Enix Shinjuku',
+    tip: 'Alternativa à loja nova da Square Enix, perto da estação Shinjuku: a ARTNIA é menor, mas fica na sede da empresa. Aberta ~11h–21h; confirmar horário perto da viagem.', aka: ['ARTNIA', 'Artnia'], g: 'ARTNIA Square Enix Shinjuku',
   },
 
   /* ---- Dia 1: Akihabara ---- */
@@ -158,6 +165,13 @@ window.PLACES = {
     n: 'Akihabara Radio Kaikan', jp: '秋葉原ラジオ会館', t: 'games', c: 'tokyo', ll: [35.69975, 139.77165], w: 'Akihabara Radio Kaikan', cs: 'Akihabara Radio Kaikan',
     d: 'Prédio de 10 andares só de lojas de figures, colecionáveis, cards (Pokémon, Yu-Gi-Oh!), model kits e anime. Um dos melhores lugares de Akihabara para procurar itens específicos.',
     aka: ['Radio Kaikan'],
+  },
+  'bookoff-akiba': {
+    n: 'BOOKOFF Akihabara Ekimae', jp: 'BOOKOFF 秋葉原駅前店', t: 'games', c: 'tokyo', ll: [35.69785, 139.77420],
+    img: false,
+    d: 'Filial da Book Off, a maior rede de usados do Japão, colada ao lado leste da estação Akihabara. Vários andares de mangás (alguns a partir de ¥100), games antigos e atuais, CDs, DVDs, artbooks e eletrônicos usados, quase sempre em ótimo estado. Foi reformada em novembro de 2025.',
+    tip: 'Aberta até ~22h–23h. Vale mais pelos jogos (cartuchos de Super Famicom, Game Boy, PlayStation) do que pelos consoles retrô, que costumam sair caros. Tax-free com passaporte. Endereço: 1-6-4 Kanda-Sakumacho, perto da saída 3 do metrô Hibiya.',
+    aka: ['BOOKOFF', 'Book Off', 'Bookoff'], g: 'BOOKOFF 秋葉原駅前店',
   },
   'yodobashi-akiba': {
     n: 'Yodobashi-Akiba', jp: 'ヨドバシAkiba', t: 'loja', c: 'tokyo', ll: [35.69880, 139.77460],
@@ -248,7 +262,7 @@ window.PLACES = {
   },
   'nihonbashi': {
     n: 'Nihonbashi', jp: '日本橋', t: 'bairro', c: 'tokyo', ll: [35.68400, 139.77450], w: 'Nihonbashi',
-    d: '"Ponte do Japão": bairro comercial tradicional a leste da Tokyo Station, onde fica a ponte que era o ponto zero de todas as estradas do Japão no período Edo. Hoje tem lojas de departamento históricas (Mitsukoshi, Takashimaya) e a Pokémon Center Tokyo DX.',
+    d: '"Ponte do Japão": bairro comercial tradicional a leste da Tokyo Station, onde fica a ponte que era o ponto zero de todas as estradas do Japão no período Edo. Hoje tem lojas de departamento históricas (Mitsukoshi, Takashimaya).',
   },
   'icho-namiki': {
     n: 'Avenida dos Ginkgos (Jingu Gaien Icho Namiki)', jp: '神宮外苑いちょう並木', t: 'natureza', c: 'tokyo', ll: [35.67430, 139.71840], w: 'Meiji Jingu Gaien',
@@ -363,7 +377,7 @@ window.PLACES = {
   /* ---- Ikebukuro (jantar do dia 2) ---- */
   'ikebukuro': {
     n: 'Ikebukuro', jp: '池袋', t: 'bairro', c: 'tokyo', ll: [35.72950, 139.71400], w: 'Ikebukuro',
-    d: 'Grande centro comercial ao norte de Shinjuku, com uma das estações mais movimentadas de Tóquio. É o polo de anime e mangá alternativo a Akihabara: Animate (a maior loja de anime do mundo), Otome Road (voltada ao público feminino), Pokémon Center Mega Tokyo e o complexo Sunshine City. Fica a só 3 paradas do hotel pela linha Fukutoshin.',
+    d: 'Grande centro comercial ao norte de Shinjuku, com uma das estações mais movimentadas de Tóquio. É o polo de anime e mangá alternativo a Akihabara: Animate (a maior loja de anime do mundo), Otome Road (voltada ao público feminino) e o complexo Sunshine City. Fica a só 3 paradas do hotel pela linha Fukutoshin.',
   },
   'ikebukuro-sta': {
     n: 'Estação Ikebukuro', jp: '池袋駅', t: 'estacao', c: 'tokyo', ll: [35.72950, 139.71090], w: 'Ikebukuro Station',
@@ -380,12 +394,6 @@ window.PLACES = {
     cs: 'Animate Ikebukuro',
     d: 'A maior loja de anime do mundo: um prédio inteiro de mangás, produtos oficiais de anime, figures, artbooks e eventos, na "Animate-dori" de Ikebukuro, a ~7 min a pé da saída leste.',
     tip: 'Opcional antes do jantar no Rikimaru (dia 07/12). Aberta até ~21h.', aka: ['Animate'],
-  },
-  'pokemon-center-mega': {
-    n: 'Pokémon Center Mega Tokyo', jp: 'ポケモンセンターメガトウキョー', t: 'games', c: 'tokyo', ll: [35.72889, 139.71918],
-    cs: 'Pokemon Center Mega Tokyo',
-    d: 'Uma das maiores Pokémon Centers do Japão, no shopping Sunshine City (Alpa, 2º andar), com estátuas gigantes de Mega Charizard e Mega Mewtwo, produtos exclusivos e área de cards. ~12 min a pé da estação.',
-    tip: 'Opcional antes do jantar no Rikimaru. O Sunshine City costuma fechar às 20h.', aka: ['Pokémon Center Mega Tokyo', 'Sunshine City'],
   },
 
   /* ---- Dia 4: Palácio / Tokyo Station / Marunouchi / Ginza ---- */
@@ -423,12 +431,6 @@ window.PLACES = {
     img: false,
     d: 'Corredor no subsolo da Tokyo Station (saída Yaesu) com ~30 lojas oficiais de personagens: Pokémon, Jump Shop (One Piece, Dragon Ball), Studio Ghibli, Hello Kitty, Snoopy, Ultraman etc. Ao lado fica a Tokyo Ramen Street.',
     aka: ['Character Street', 'Ramen Street', 'Tokyo Ramen Street'],
-  },
-  'pokemon-center-dx': {
-    n: 'Pokémon Center Tokyo DX & Pokémon Café', jp: 'ポケモンセンタートウキョーDX', t: 'games', c: 'tokyo', ll: [35.68076, 139.77352],
-    img: false,
-    d: 'A maior Pokémon Center de Tóquio, no Nihonbashi Takashimaya S.C. (anexo, 5º andar), a ~10 min a pé da Tokyo Station. Ao lado fica o Pokémon Café (pratos temáticos; exige reserva online com até 31 dias de antecedência).',
-    tip: 'Opcional no dia 4, se quiser um desvio curto saindo da Tokyo Station.', aka: ['Pokémon Center Tokyo DX', 'Pokémon Café', 'Pokemon Cafe'],
   },
   'kitte': {
     n: 'KITTE (terraço com vista da Tokyo Station)', jp: 'KITTE 丸の内', t: 'mirante', c: 'tokyo', ll: [35.67960, 139.76470], w: 'JP Tower',
@@ -910,9 +912,9 @@ window.PLACES = {
     tip: 'Aberto até ~22h30. Entrada ~¥2.000.', aka: ['Floating Garden', 'Umeda Sky', 'mirante em Umeda', 'Takimi Koji'],
   },
   'daimaru-umeda': {
-    n: 'Nintendo OSAKA & Pokémon Center Osaka (Daimaru Umeda)', jp: '大丸梅田店 13F', t: 'games', c: 'osaka', ll: [34.70191, 135.49645],
+    n: 'Nintendo OSAKA (Daimaru Umeda)', jp: '大丸梅田店 13F', t: 'games', c: 'osaka', ll: [34.70191, 135.49645],
     cs: 'Daimaru Umeda',
-    d: 'O 13º andar da loja de departamento Daimaru Umeda (colada à estação JR Osaka) reúne a Nintendo OSAKA (a maior das lojas oficiais Nintendo), o Pokémon Center Osaka e a Capcom Store. Encaixa perfeito no fim do dia 14.',
+    d: 'O 13º andar da loja de departamento Daimaru Umeda (colada à estação JR Osaka) tem a Nintendo OSAKA, a maior das lojas oficiais da Nintendo. No mesmo andar ficam a Capcom Store e uma Pokémon Center. Encaixa perfeito no fim do dia 14.',
     tip: 'Abre ~10h–20h (segue o horário da Daimaru).', aka: ['Nintendo OSAKA', 'Pokémon Center Osaka', 'Daimaru Umeda'],
     g: 'Nintendo OSAKA',
   },
@@ -974,13 +976,6 @@ window.PLACES = {
     n: 'GU LINKS UMEDA', jp: 'ジーユー LINKS UMEDA店', t: 'loja', c: 'osaka', ll: [34.70445, 135.49619], img: false,
     d: 'Loja grande da GU no shopping LINKS UMEDA, ligado às estações de Umeda. Fica no caminho do fim de tarde em Umeda (Dia 14).',
     g: 'ジーユー LINKS UMEDA店',
-  },
-  'daimaru-shinsaibashi': {
-    n: 'Pokémon Center Osaka DX (Daimaru Shinsaibashi)', jp: 'ポケモンセンターオーサカDX', t: 'games', c: 'osaka', ll: [34.67296, 135.50077],
-    cs: 'Shinsaibashi-suji',
-    d: 'Pokémon Center "DX" com o Pokémon Café ao lado, no 9º andar da loja de departamento Daimaru Shinsaibashi, no meio da galeria Shinsaibashi-suji. Perfeito para as compras do último dia.',
-    tip: 'Pokémon Café exige reserva online (abre 31 dias antes, esgota rápido).', aka: ['Pokémon Center Osaka DX', 'Daimaru Shinsaibashi'],
-    g: 'ポケモンセンターオーサカDX',
   },
   'kix': {
     n: 'Aeroporto de Kansai (KIX)', jp: '関西国際空港', t: 'aeroporto', c: 'osaka', ll: [34.43200, 135.23040], w: 'Kansai International Airport',

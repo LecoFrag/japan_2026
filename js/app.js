@@ -769,7 +769,7 @@
     const byCity = {}; ids.forEach((id) => (byCity[PLACES[id].c] = byCity[PLACES[id].c] || []).push(id));
     main.innerHTML = `<div class="wrap">
       <section class="page-hero"><div class="eyebrow">Extra · ゲーム</div><h1>Games, anime & Nintendo</h1>
-        <p>O foco da viagem é a cultura — mas estes são os lugares de games, anime e lojas oficiais (Nintendo, Pokémon, Capcom, Square Enix…) que cabem no roteiro <b>sem desvio</b>. Cada um mostra o dia em que já está no caminho.</p></section>
+        <p>O foco da viagem é a cultura — mas estes são os lugares de games, anime e lojas oficiais (Nintendo, Square Enix, Capcom, Pokémon…) que cabem no roteiro <b>sem desvio</b>. Cada um mostra o dia em que já está no caminho.</p></section>
       ${['tokyo', 'kyoto', 'osaka'].map((c) => byCity[c] ? `<section class="games-city" style="${U.cssCity(c)}"><h2>${esc(window.CITIES[c].n)} <span class="jp">${window.CITIES[c].jp}</span></h2>
         <div class="grid" style="margin-top:12px">${byCity[c].map((id) => { const p = PLACES[id]; return `
           <button type="button" class="card game-row reveal" data-open="p:${id}"><div class="gp">${U.img(id)}</div>

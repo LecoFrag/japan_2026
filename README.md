@@ -15,7 +15,7 @@ Dê **dois cliques em `index.html`**. Ele abre no navegador e funciona direto do
 | **Roteiro** | Cada dia com linha do tempo, mapa interativo (rotas reais a pé, trens, áreas exploradas), distâncias, atrações com fotos e links do Google Maps por trecho |
 | **Mapa** | Todos os lugares; filtros por cidade/tipo; "ordenar por proximidade" usando o GPS do celular |
 | **Glossário** | Lugares (bairro? templo? rua?) e termos culturais, com foto e explicação. Palavras sublinhadas em qualquer texto abrem o glossário |
-| **Games** | Lojas Nintendo, Pokémon, Capcom, Square Enix, retro games… e em que dia cada uma já está no caminho |
+| **Games** | Lojas Nintendo, Square Enix, Capcom, retro games… e em que dia cada uma já está no caminho |
 | **Monte Fuji** | Plano B com roteiro, mapa, previsão de nuvens ao vivo e como trocar os dias |
 | **Dicas** | Entrada no país, dinheiro, clima, etiqueta, emergências, frases com áudio e checklist de pendências |
 

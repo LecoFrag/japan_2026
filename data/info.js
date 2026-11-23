@@ -128,13 +128,6 @@ window.TODO = [
       'Aluguel de kimono: várias lojas perto do Kiyomizu-dera e de Gion (~¥3.000–5.000, com penteado). A devolução costuma ser até ~17h–18h.',
       'Atenção: o Dia 3 em Kyoto é o mais longo a pé; andar o dia todo de kimono e tamanco cansa. Uma opção é alugar só para a tarde.',
     ] },
-  { id: 'pokecafe', g: 'book', t: '(Opcional) Reservar o Pokémon Café', when: 'Tradicionalmente 31 dias antes, às 18h do Japão; em 2026 há relatos de liberação mensal no dia 1º às 18h (JST)',
-    x: [
-      'Existem dois: Tóquio (Nihonbashi, perto da Tokyo Station — encaixa em 09/12) e Osaka (Daimaru Shinsaibashi — encaixa nas compras de 16/12).',
-      'As reservas esgotam em minutos. Confiram na página oficial quando os horários de dezembro serão liberados.',
-      '18h no Japão = 6h da manhã em Brasília.',
-    ],
-    links: [{ t: 'Pokémon Café (oficial)', u: 'https://www.pokemon-cafe.jp/en/' }] },
 
   /* ------------------------------------------------------------ logística */
   { id: 'aeroporto', g: 'trip', t: 'Anotar números dos voos e o terminal de chegada em Narita (T1 ou T2)', day: 'tk0', when: 'Antes do embarque',
